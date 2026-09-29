@@ -1,0 +1,6 @@
+{
+  "name": "KHETIX — Intelligent Digital Agriculture Platform",
+  "description": "An AI-powered digital agriculture platform connecting soil, weather, crop satellite data, and rule engines for sustainable, high-yield farming.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

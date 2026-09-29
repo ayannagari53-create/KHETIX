@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": "usr-goog-1790597506454",
+      "name": "Ramesh Patil",
+      "emailOrPhone": "ramesh.kisan@gmail.com",
+      "email": "ramesh.kisan@gmail.com",
+      "googleId": "google-user-999255",
+      "avatar": "https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&auto=format&fit=crop&q=80",
+      "authProvider": "google",
+      "preferredLanguage": "en",
+      "state": "Karnataka",
+      "district": "Bengaluru Rural",
+      "taluk": "Devanahalli",
+      "village": "Kundana",
+      "kisanId": "KISAN-G-193714",
+      "totalAcres": 8,
+      "primaryCrop": "Tomato",
+      "farmName": "Ramesh Patil's Precision Farm",
+      "createdAt": "2026-09-28T12:11:46.454Z",
+      "updatedAt": "2026-09-28T13:56:58.459Z"
+    }
+  ]
+}
