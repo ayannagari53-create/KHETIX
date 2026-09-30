@@ -8,7 +8,7 @@ interface NotificationDrawerProps {
 }
 
 export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, onClose }) => {
-  const { notifications, markNotificationRead, markAllNotificationsRead, setActiveModule } = useFarm();
+  const { notifications, markNotificationRead, markAllNotificationsRead, setActiveModule, t } = useFarm();
 
   if (!isOpen) return null;
 
@@ -18,17 +18,17 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-emerald-500/20">
           <div>
-            <h3 className="font-extrabold text-lg text-white font-display">Farm Notifications</h3>
-            <p className="text-xs text-slate-400">Autonomous rule & agronomic alerts</p>
+            <h3 className="font-extrabold text-lg text-white font-display">{t('notif_title', 'Farm Notifications')}</h3>
+            <p className="text-xs text-slate-400">{t('notif_subtitle', 'Autonomous rule & agronomic alerts')}</p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={markAllNotificationsRead}
               className="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs flex items-center gap-1 transition"
-              title="Mark all as read"
+              title={t('notif_mark_all', 'Mark all as read')}
             >
               <CheckCheck className="w-4 h-4" />
-              <span className="hidden sm:inline">Mark read</span>
+              <span className="hidden sm:inline">{t('notif_mark_all', 'Mark read')}</span>
             </button>
             <button
               onClick={onClose}
@@ -43,7 +43,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
         <div className="flex-1 overflow-y-auto py-4 space-y-3 scrollbar-thin">
           {notifications.length === 0 ? (
             <div className="text-center py-12 text-slate-400">
-              <p>No notifications right now.</p>
+              <p>{t('notif_empty', 'No notifications right now.')}</p>
             </div>
           ) : (
             notifications.map((notif) => {

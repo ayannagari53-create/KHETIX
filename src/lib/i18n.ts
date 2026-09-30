@@ -59,9 +59,68 @@ export const ALL_LOCALES: Record<SupportedLanguage, Record<string, string>> = {
   hinglish,
 };
 
-export function getTranslation(lang: SupportedLanguage, key: string, fallback?: string): string {
+export function getTranslation(
+  lang: SupportedLanguage,
+  key: string,
+  paramsOrFallback?: Record<string, string | number> | string,
+  fallback?: string
+): string {
   const dictionary = ALL_LOCALES[lang] || ALL_LOCALES.en;
-  if (dictionary[key]) return dictionary[key];
-  if (ALL_LOCALES.en[key]) return ALL_LOCALES.en[key];
-  return fallback || key;
+  const enDict = ALL_LOCALES.en;
+  const normDotToUnder = key.includes('.') ? key.replace(/\./g, '_') : key;
+  const normUnderToDot = key.includes('_') ? key.replace(/_/g, '.') : key;
+
+  // 1. Direct and normalized lookup in target language dictionary
+  let text =
+    dictionary?.[key] ||
+    dictionary?.[normDotToUnder] ||
+    dictionary?.[normUnderToDot];
+
+  // 2. Common suffix/alias matching (e.g. 'farm.save' -> 'common_save', 'cancel' -> 'common_cancel')
+  if (!text) {
+    const lastPart = key.split(/[._]/).pop();
+    if (lastPart) {
+      const commonKey = `common_${lastPart}`;
+      if (dictionary?.[commonKey]) {
+        text = dictionary[commonKey];
+      }
+    }
+  }
+
+  // 3. Fallback to English dictionary with same rules
+  if (!text) {
+    text =
+      enDict?.[key] ||
+      enDict?.[normDotToUnder] ||
+      enDict?.[normUnderToDot];
+
+    if (!text) {
+      const lastPart = key.split(/[._]/).pop();
+      if (lastPart && enDict?.[`common_${lastPart}`]) {
+        text = enDict[`common_${lastPart}`];
+      }
+    }
+  }
+
+  let actualFallback: string | undefined = fallback;
+  let params: Record<string, string | number> | undefined;
+
+  if (typeof paramsOrFallback === 'string') {
+    actualFallback = paramsOrFallback;
+  } else if (paramsOrFallback && typeof paramsOrFallback === 'object') {
+    params = paramsOrFallback;
+  }
+
+  if (!text) {
+    text = actualFallback || key;
+  }
+
+  if (params && typeof text === 'string') {
+    for (const [k, v] of Object.entries(params)) {
+      text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v));
+      text = text.replace(new RegExp(`\\{\\{${k}\\}\\}`, 'g'), String(v));
+    }
+  }
+
+  return text;
 }

@@ -24,6 +24,7 @@ export const SmartIrrigation: React.FC = () => {
     rainProbabilityOverride,
     setRainProbabilityOverride,
     toggleFieldValve,
+    t,
   } = useFarm();
 
   const [dripFlowRateLph, setDripFlowRateLph] = useState<number>(2.4); // liters per hour per emitter
@@ -47,14 +48,14 @@ export const SmartIrrigation: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Droplets className="w-6 h-6 text-sky-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Smart Precision Irrigation Engine
+              {t('irrig_title', 'Smart Precision Irrigation Engine')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[10px] font-bold">
-              Autonomous Rule Engine
+              {t('dash_rule_active', 'Autonomous Rule Engine')}
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Real-time volumetric soil moisture coupled with meteorological precipitation forecasts and Penman-Monteith crop evapotranspiration.
+            {t('irrig_subtitle', 'Real-time volumetric soil moisture coupled with meteorological precipitation forecasts and Penman-Monteith crop evapotranspiration.')}
           </p>
         </div>
 
@@ -85,7 +86,7 @@ export const SmartIrrigation: React.FC = () => {
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-emerald-400" />
               <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                Live Agronomic Decision Rule Output
+                {t('dash_ai_advisory', 'Live Agronomic Decision Rule Output')}
               </span>
               <span
                 className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full ${
@@ -115,7 +116,7 @@ export const SmartIrrigation: React.FC = () => {
           </div>
 
           <div className="text-center lg:text-right p-4 rounded-xl bg-black/40 border border-white/10 shrink-0 space-y-1">
-            <span className="text-[11px] text-slate-400 block">Conserved Irrigation Water</span>
+            <span className="text-[11px] text-slate-400 block">{t('dash_water_saved', 'Conserved Irrigation Water')}</span>
             <div className="text-3xl font-extrabold text-sky-400 font-display">
               {decision.waterSavingsLiters.toLocaleString()} L
             </div>
@@ -129,7 +130,7 @@ export const SmartIrrigation: React.FC = () => {
         <div className="flex items-center justify-between">
           <h3 className="font-bold text-sm text-white flex items-center gap-2">
             <Sliders className="w-4 h-4 text-emerald-400" />
-            <span>Interactive Environmental Condition Simulator</span>
+            <span>{t('dash_3d_twin_title', 'Interactive Environmental Condition Simulator')}</span>
           </h3>
           <span className="text-xs text-slate-400">Slide values to observe autonomous rule changes</span>
         </div>
@@ -137,7 +138,7 @@ export const SmartIrrigation: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2 p-3.5 rounded-xl bg-black/40 border border-white/5">
             <div className="flex justify-between text-xs">
-              <span className="text-slate-300">Soil Volumetric Moisture:</span>
+              <span className="text-slate-300">{t('dash_kpi_soil_moisture', 'Soil Volumetric Moisture')}:</span>
               <strong className="text-emerald-400 font-mono text-sm">{soilMoistureOverride}%</strong>
             </div>
             <input
@@ -157,7 +158,7 @@ export const SmartIrrigation: React.FC = () => {
 
           <div className="space-y-2 p-3.5 rounded-xl bg-black/40 border border-white/5">
             <div className="flex justify-between text-xs">
-              <span className="text-slate-300">Next 24-hr Rain Probability:</span>
+              <span className="text-slate-300">{t('weather_rain_chance', 'Next 24-hr Rain Probability')}:</span>
               <strong className="text-sky-400 font-mono text-sm">{rainProbabilityOverride}%</strong>
             </div>
             <input
@@ -180,7 +181,7 @@ export const SmartIrrigation: React.FC = () => {
       {/* Field Water Schedules & Solenoid Controls */}
       <div className="space-y-3">
         <h3 className="font-extrabold text-base text-white font-display">
-          Field Water Scheduling & Solenoid Valves
+          {t('irrig_valves_title', 'Field Water Scheduling & Solenoid Valves')}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

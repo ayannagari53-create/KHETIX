@@ -34,6 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
     rainProbabilityOverride,
     currentUser,
     logout,
+    t,
   } = useFarm();
 
   const [farmDropdownOpen, setFarmDropdownOpen] = useState(false);
@@ -97,7 +98,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
           {farmDropdownOpen && (
             <div className="absolute top-full mt-2 left-0 w-64 p-2 rounded-xl bg-[#0d2e20] border border-emerald-500/30 shadow-2xl z-50 animate-in fade-in zoom-in-95">
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 py-1">
-                Your Registered Farms
+                {t('header_registered_farms', 'Your Registered Farms')}
               </div>
               {farms.map((f) => (
                 <button
@@ -115,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
                   <div>
                     <p className="font-bold text-white">{f.name}</p>
                     <p className="text-[11px] text-slate-400">
-                      {f.totalAcres} Acres • {f.state}
+                      {f.totalAcres} {t('common_acres', 'Acres')} • {f.state}
                     </p>
                   </div>
                   {f.id === activeFarm?.id && (
@@ -132,7 +133,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
                   }}
                   className="w-full text-center py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition flex items-center justify-center gap-1.5"
                 >
-                  <span>🌍 Change Location & GPS Coordinates</span>
+                  <span>🌍 {t('header_change_location', 'Change Location & GPS Coordinates')}</span>
                 </button>
               </div>
             </div>
@@ -150,7 +151,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
         >
           <CloudRain className="w-4 h-4 text-sky-400 animate-bounce" />
           <span>
-            {activeFarm?.district || 'Regional'} 28°C • <strong>{rainProbabilityOverride}% Rain Alert</strong>
+            {activeFarm?.district || 'Regional'} 28°C • <strong>{rainProbabilityOverride}% {t('rain_alert', 'Rain Alert')}</strong>
           </span>
         </button>
 
@@ -158,10 +159,10 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
         <button
           onClick={() => setActiveModule('reports')}
           className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-semibold transition"
-          title="Generate Farm Audit Report"
+          title={t('header_audit_report', 'Generate Farm Audit Report')}
         >
           <FileText className="w-3.5 h-3.5" />
-          <span>Audit Report</span>
+          <span>{t('header_audit_report', 'Audit Report')}</span>
         </button>
 
         {/* Marketplace Cart */}
@@ -254,7 +255,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
               <button
                 onClick={logout}
                 className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition"
-                title="Sign Out / Landing"
+                title={t('header_sign_out', 'Sign Out')}
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -269,7 +270,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
                 className="px-2.5 py-1.5 rounded-lg bg-[#0d2e20] hover:bg-[#123828] border border-emerald-500/30 text-xs font-semibold text-emerald-300 flex items-center gap-1 transition"
               >
                 <LogIn className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Sign In</span>
+                <span className="hidden sm:inline">{t('header_sign_in', 'Sign In')}</span>
               </button>
 
               <button
@@ -280,7 +281,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
                 className="px-2.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold flex items-center gap-1 transition shadow-md shadow-emerald-500/20"
               >
                 <UserPlus className="w-3.5 h-3.5" />
-                <span>Register</span>
+                <span>{t('header_register', 'Register')}</span>
               </button>
             </div>
           )}

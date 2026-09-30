@@ -15,7 +15,7 @@ import { calculateCropRecommendations, RecommendedCrop } from '../../lib/rules/c
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const CropRecommendation: React.FC = () => {
-  const { setActiveModule } = useFarm();
+  const { setActiveModule, t } = useFarm();
 
   const [soilType, setSoilType] = useState<'Alluvial' | 'Black Clay' | 'Sandy Loam' | 'Red Loam'>('Black Clay');
   const [ph, setPh] = useState<number>(6.8);
@@ -45,23 +45,23 @@ export const CropRecommendation: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Wheat className="w-6 h-6 text-emerald-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Agronomic Crop Recommendation Engine
+              {t('crop_rec_title', 'Agronomic Crop Recommendation Engine')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
               Multi-Factor Matching
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Algorithmic crop suitability evaluation scoring soil physical chemistry, seasonal rainfall, and local APMC market profitability.
+            {t('crop_rec_subtitle', 'Algorithmic crop suitability evaluation scoring soil physical chemistry, seasonal rainfall, and local APMC market profitability.')}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveModule('soil')}
-            className="px-4 py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-bold text-xs transition"
+            className="px-4 py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-bold text-xs transition cursor-pointer"
           >
-            Import Soil Test Report
+            {t('nav_soil', 'Import Soil Test Report')}
           </button>
         </div>
       </div>
@@ -72,12 +72,12 @@ export const CropRecommendation: React.FC = () => {
         <div className="lg:col-span-4 p-5 rounded-2xl bg-[#0a2318] border border-emerald-500/20 shadow-xl space-y-4">
           <div className="flex items-center gap-2 text-white font-bold text-sm">
             <Sliders className="w-4 h-4 text-emerald-400" />
-            <span>Soil & Climatic Parameters</span>
+            <span>{t('soil_title', 'Soil & Climatic Parameters')}</span>
           </div>
 
           <div className="space-y-3 text-xs">
             <div>
-              <label className="text-slate-400 block mb-1">Soil Texture Classification</label>
+              <label className="text-slate-400 block mb-1">{t('loc_soil_type', 'Soil Texture Classification')}</label>
               <select
                 value={soilType}
                 onChange={(e) => setSoilType(e.target.value as any)}
@@ -92,7 +92,7 @@ export const CropRecommendation: React.FC = () => {
 
             <div>
               <div className="flex justify-between text-slate-400 mb-1">
-                <span>Soil pH Level:</span>
+                <span>{t('soil_param_ph', 'Soil pH Level:')}</span>
                 <strong className="text-emerald-400">{ph}</strong>
               </div>
               <input
@@ -112,7 +112,7 @@ export const CropRecommendation: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-slate-400 block mb-1">Available Nitrogen (N)</label>
+              <label className="text-slate-400 block mb-1">{t('soil_param_nitrogen', 'Available Nitrogen (N)')}</label>
               <select
                 value={nitrogenLevel}
                 onChange={(e) => setNitrogenLevel(e.target.value as any)}
@@ -125,7 +125,7 @@ export const CropRecommendation: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-slate-400 block mb-1">Available Phosphorus (P)</label>
+              <label className="text-slate-400 block mb-1">{t('soil_param_phosphorus', 'Available Phosphorus (P)')}</label>
               <select
                 value={phosphorusLevel}
                 onChange={(e) => setPhosphorusLevel(e.target.value as any)}
@@ -138,7 +138,7 @@ export const CropRecommendation: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-slate-400 block mb-1">Available Potassium (K)</label>
+              <label className="text-slate-400 block mb-1">{t('soil_param_potassium', 'Available Potassium (K)')}</label>
               <select
                 value={potassiumLevel}
                 onChange={(e) => setPotassiumLevel(e.target.value as any)}
@@ -165,7 +165,7 @@ export const CropRecommendation: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-slate-400 block mb-1">Agro Zone</label>
+                <label className="text-slate-400 block mb-1">{t('loc_agro_zone', 'Agro Zone')}</label>
                 <select
                   value={agroClimaticZone}
                   onChange={(e) => setAgroClimaticZone(e.target.value as any)}

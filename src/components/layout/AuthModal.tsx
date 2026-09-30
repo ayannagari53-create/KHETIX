@@ -36,6 +36,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setActiveModule,
     language,
     setLanguage,
+    t,
   } = useFarm();
 
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>(initialMode);
@@ -218,14 +219,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             🌾
           </div>
           <h2 className="text-2xl font-extrabold text-white font-display">
-            {mode === 'login' && 'Sign In to KHETIX'}
-            {mode === 'signup' && 'Create Your Account'}
-            {mode === 'forgot' && 'Reset Password'}
+            {mode === 'login' && t('auth_sign_in_title', 'Sign In to KHETIX')}
+            {mode === 'signup' && t('auth_sign_up_title', 'Create Your Account')}
+            {mode === 'forgot' && t('auth_forgot_title', 'Reset Password')}
           </h2>
           <p className="text-xs text-slate-300 max-w-sm mx-auto">
-            {mode === 'login' && 'Access your farm dashboard, IoT telemetry, and AI advisory tools.'}
-            {mode === 'signup' && 'Create your KHETIX account. Add your farm details after signing in.'}
-            {mode === 'forgot' && 'Enter your registered mobile or email to reset your credentials.'}
+            {mode === 'login' && t('auth_sign_in_subtitle', 'Access your farm dashboard, IoT telemetry, and AI advisory tools.')}
+            {mode === 'signup' && t('auth_sign_up_subtitle', 'Create your KHETIX account. Add your farm details after signing in.')}
+            {mode === 'forgot' && t('auth_forgot_subtitle', 'Enter your registered mobile or email to reset your credentials.')}
           </p>
         </div>
 
@@ -233,7 +234,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="mb-5 p-2.5 rounded-2xl bg-[#06150f] border border-emerald-500/20 flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs text-slate-300">
             <Globe className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span className="font-semibold hidden sm:inline">Interface Language:</span>
+            <span className="font-semibold hidden sm:inline">{t('auth_interface_lang', 'Interface Language:')}</span>
             <span className="font-bold text-emerald-300">{currentLangMeta.nativeName}</span>
           </div>
 
@@ -278,7 +279,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                 />
               </svg>
-              <span>Continue with Google</span>
+              <span>{t('auth_google_continue', 'Continue with Google')}</span>
               <span className="text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded bg-slate-200 text-slate-800">
                 {currentLangMeta.code.toUpperCase()}
               </span>
@@ -287,7 +288,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div className="relative flex items-center justify-center">
               <div className="border-t border-emerald-500/20 w-full" />
               <span className="bg-[#0a2318] px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                or sign in with password
+                {t('auth_or_credentials', 'or use mobile number / email')}
               </span>
               <div className="border-t border-emerald-500/20 w-full" />
             </div>
@@ -310,7 +311,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Sign In
+              {t('header_sign_in', 'Sign In')}
             </button>
             <button
               type="button"
@@ -325,7 +326,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Create Account
+              {t('auth_sign_up_title', 'Create Account')}
             </button>
           </div>
         )}
@@ -363,14 +364,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="text-xs text-slate-300 font-semibold block mb-1.5">
-                Mobile Number or Email
+                {t('auth_contact', 'Mobile Number or Email')}
               </label>
               <div className="relative">
                 <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   required
-                  placeholder="+91 98765 43210 or you@khetix.in"
+                  placeholder={t('auth_contact_ph', '+91 98765 43210 or you@khetix.in')}
                   value={loginIdentifier}
                   onChange={(e) => setLoginIdentifier(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#06150f] border border-emerald-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
@@ -380,7 +381,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs text-slate-300 font-semibold">Password</label>
+                <label className="text-xs text-slate-300 font-semibold">{t('auth_password', 'Password')}</label>
                 <button
                   type="button"
                   onClick={() => {
@@ -391,7 +392,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   }}
                   className="text-xs text-emerald-400 hover:text-emerald-300 transition underline cursor-pointer"
                 >
-                  Forgot Password?
+                  {t('auth_forgot_pwd', 'Forgot Password?')}
                 </button>
               </div>
               <div className="relative">
@@ -420,7 +421,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               disabled={submitting}
               className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-500/20 cursor-pointer"
             >
-              <span>{submitting ? 'Verifying...' : 'Sign In'}</span>
+              <span>{submitting ? t('common_loading', 'Verifying...') : t('auth_sign_in_btn', 'Sign In to Dashboard')}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -430,19 +431,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {mode === 'signup' && (
           <form onSubmit={handleSignup} className="space-y-4">
             <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300">
-              ℹ️ After creating your account, you can add your farm details from the <strong>Farm Management</strong> section.
+              ℹ️ {t('auth_sign_up_subtitle', 'Create your KHETIX account. Add your farm details after signing in.')}
             </div>
 
             <div>
               <label className="text-xs text-slate-300 font-semibold block mb-1">
-                Full Name *
+                {t('auth_full_name', 'Full Name')} *
               </label>
               <div className="relative">
                 <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   required
-                  placeholder="Your full name"
+                  placeholder={t('auth_full_name_ph', 'Your full name')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#06150f] border border-emerald-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
@@ -452,7 +453,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
             <div>
               <label className="text-xs text-slate-300 font-semibold block mb-1">
-                Mobile Number *
+                {t('auth_contact', 'Mobile Number')} *
               </label>
               <div className="relative">
                 <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -469,7 +470,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
             <div>
               <label className="text-xs text-slate-300 font-semibold block mb-1">
-                Email <span className="text-slate-500 font-normal">(optional)</span>
+                {t('common_email', 'Email')} <span className="text-slate-500 font-normal">({t('common_optional', 'optional')})</span>
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -485,14 +486,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
             <div>
               <label className="text-xs text-slate-300 font-semibold block mb-1">
-                Password * <span className="text-slate-500 font-normal">(min. 6 characters)</span>
+                {t('auth_password', 'Password')} *
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type={showSignupPassword ? 'text' : 'password'}
                   required
-                  placeholder="Minimum 6 characters"
+                  placeholder={t('auth_password_ph', 'Minimum 6 characters')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-9 pr-10 py-2.5 rounded-xl bg-[#06150f] border border-emerald-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
@@ -513,7 +514,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               disabled={submitting}
               className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-500/20 cursor-pointer mt-2"
             >
-              <span>{submitting ? 'Creating Account...' : 'Create Account'}</span>
+              <span>{submitting ? t('common_loading', 'Creating Account...') : t('auth_create_btn', 'Create Account & Continue')}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -526,14 +527,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <form onSubmit={handleRequestOtp} className="space-y-4">
                 <div>
                   <label className="text-xs text-slate-300 font-semibold block mb-1.5">
-                    Registered Mobile or Email
+                    {t('auth_contact', 'Registered Mobile or Email')}
                   </label>
                   <div className="relative">
                     <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       required
-                      placeholder="+91 98765 43210 or you@khetix.in"
+                      placeholder={t('auth_contact_ph', '+91 98765 43210 or you@khetix.in')}
                       value={forgotContact}
                       onChange={(e) => setForgotContact(e.target.value)}
                       className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#06150f] border border-emerald-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
@@ -547,14 +548,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg cursor-pointer"
                 >
                   <KeyRound className="w-4 h-4" />
-                  <span>{submitting ? 'Sending Code...' : 'Send Verification Code'}</span>
+                  <span>{submitting ? t('common_loading', 'Sending Code...') : t('auth_send_otp_btn', 'Send Verification Code')}</span>
                 </button>
               </form>
             ) : (
               <form onSubmit={handleResetPassword} className="space-y-4">
                 <div>
                   <label className="text-xs text-slate-300 font-semibold block mb-1">
-                    6-Digit Verification Code *
+                    {t('auth_otp_code', '6-Digit Verification Code')} *
                   </label>
                   <input
                     type="text"
@@ -569,13 +570,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                 <div>
                   <label className="text-xs text-slate-300 font-semibold block mb-1">
-                    New Password *
+                    {t('auth_new_pwd', 'New Password')} *
                   </label>
                   <div className="relative">
                     <input
                       type={showNewPassword ? 'text' : 'password'}
                       required
-                      placeholder="At least 6 characters"
+                      placeholder={t('auth_password_ph', 'At least 6 characters')}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       className="w-full px-4 pr-10 py-2.5 rounded-xl bg-[#06150f] border border-emerald-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
@@ -593,12 +594,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                 <div>
                   <label className="text-xs text-slate-300 font-semibold block mb-1">
-                    Confirm New Password *
+                    {t('auth_confirm_pwd', 'Confirm New Password')} *
                   </label>
                   <input
                     type="password"
                     required
-                    placeholder="Re-enter new password"
+                    placeholder={t('auth_confirm_pwd', 'Re-enter new password')}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl bg-[#06150f] border border-emerald-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
@@ -611,7 +612,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg cursor-pointer"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>{submitting ? 'Updating...' : 'Set New Password'}</span>
+                  <span>{submitting ? t('common_loading', 'Updating...') : t('auth_update_pwd_btn', 'Set New Password')}</span>
                 </button>
               </form>
             )}
@@ -627,7 +628,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 }}
                 className="text-xs text-slate-400 hover:text-white transition underline cursor-pointer"
               >
-                Back to Sign In
+                {t('auth_back_to_sign_in', 'Back to Sign In')}
               </button>
             </div>
           </div>

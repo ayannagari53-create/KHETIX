@@ -146,7 +146,11 @@ interface FarmContextType {
   placeOrder: (deliveryAddress: string, paymentMethod: string) => string;
   language: AppLanguage;
   setLanguage: (lang: AppLanguage) => void;
-  t: (key: string, fallback?: string) => string;
+  t: (
+    key: string,
+    paramsOrFallback?: Record<string, string | number> | string,
+    fallback?: string
+  ) => string;
   rawT: TranslationSet;
   quickActionTrigger: string | null;
   setQuickActionTrigger: (action: string | null) => void;
@@ -485,8 +489,12 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const t = (key: string, fallback?: string): string => {
-    return getTranslation(language as SupportedLanguage, key, fallback);
+  const t = (
+    key: string,
+    paramsOrFallback?: Record<string, string | number> | string,
+    fallback?: string
+  ): string => {
+    return getTranslation(language as SupportedLanguage, key, paramsOrFallback, fallback);
   };
 
   const rawT = TRANSLATIONS[language as keyof typeof TRANSLATIONS] || TRANSLATIONS.en;

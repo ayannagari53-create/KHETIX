@@ -19,26 +19,26 @@ import {
 import { useFarm, NavigationModule } from '../../lib/context/FarmContext';
 
 export const MobileNav: React.FC = () => {
-  const { activeModule, setActiveModule } = useFarm();
+  const { activeModule, setActiveModule, t } = useFarm();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const mainTabs: { id: NavigationModule; label: string; icon: React.ElementType }[] = [
-    { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
-    { id: 'farms', label: 'Fields', icon: Tractor },
-    { id: 'assistant', label: 'AI Farm', icon: Bot },
-    { id: 'market', label: 'Mandi', icon: TrendingUp },
+    { id: 'dashboard', label: t('nav_dashboard', 'Dashboard'), icon: LayoutDashboard },
+    { id: 'farms', label: t('nav_farms', 'Fields'), icon: Tractor },
+    { id: 'assistant', label: t('nav_assistant', 'AI Farm'), icon: Bot },
+    { id: 'market', label: t('nav_market', 'Mandi'), icon: TrendingUp },
   ];
 
   const moreModules: { id: NavigationModule; label: string; icon: React.ElementType }[] = [
-    { id: 'crops-disease', label: 'Vision AI Diagnostics', icon: ScanEye },
-    { id: 'irrigation', label: 'Smart Irrigation', icon: Droplets },
-    { id: 'crops-recommend', label: 'Crop Recommender', icon: Wheat },
-    { id: 'soil', label: 'Soil Health', icon: FlaskConical },
-    { id: 'satellite', label: 'Satellite NDVI', icon: Satellite },
-    { id: 'marketplace', label: 'Agri Marketplace', icon: ShoppingBag },
-    { id: 'livestock', label: 'Livestock & Dairy', icon: Milk },
-    { id: 'finance', label: 'Finance & Schemes', icon: Landmark },
-    { id: 'reports', label: 'Audit Report', icon: FileCheck2 },
+    { id: 'crops-disease', label: t('nav_disease', 'Vision AI Diagnostics'), icon: ScanEye },
+    { id: 'irrigation', label: t('nav_irrigation', 'Smart Irrigation'), icon: Droplets },
+    { id: 'crops-recommend', label: t('nav_crops_recommend', 'Crop Recommender'), icon: Wheat },
+    { id: 'soil', label: t('nav_soil', 'Soil Health'), icon: FlaskConical },
+    { id: 'satellite', label: t('nav_satellite', 'Satellite NDVI'), icon: Satellite },
+    { id: 'marketplace', label: t('nav_marketplace', 'Agri Marketplace'), icon: ShoppingBag },
+    { id: 'livestock', label: t('nav_livestock', 'Livestock & Dairy'), icon: Milk },
+    { id: 'finance', label: t('nav_finance', 'Finance & Schemes'), icon: Landmark },
+    { id: 'reports', label: t('nav_reports', 'Audit Report'), icon: FileCheck2 },
   ];
 
   return (
@@ -68,7 +68,7 @@ export const MobileNav: React.FC = () => {
           className="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-400 hover:text-slate-200"
         >
           <Menu className="w-5 h-5" />
-          <span className="text-[10px]">More</span>
+          <span className="text-[10px]">{t('nav_more', 'More')}</span>
         </button>
       </nav>
 
@@ -79,7 +79,7 @@ export const MobileNav: React.FC = () => {
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center gap-2">
                 <span className="text-lg">🌾</span>
-                <h3 className="font-bold text-white text-base">All 15 Intelligence Modules</h3>
+                <h3 className="font-bold text-white text-base">{t('nav_all_modules', 'All Intelligence Modules')}</h3>
               </div>
               <button
                 onClick={() => setDrawerOpen(false)}

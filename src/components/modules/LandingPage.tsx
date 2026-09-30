@@ -27,7 +27,7 @@ import { FarmScene3D } from '../3d/FarmScene3D';
 import { AuthModal } from '../layout/AuthModal';
 
 export const LandingPage: React.FC = () => {
-  const { setActiveModule, currentUser, activeFarm } = useFarm();
+  const { setActiveModule, currentUser, activeFarm, t } = useFarm();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup');
 
@@ -46,56 +46,56 @@ export const LandingPage: React.FC = () => {
   }[] = [
     {
       id: 'dashboard',
-      title: 'Executive Farm Dashboard',
-      description: 'Unified telemetry cockpit monitoring live weather, soil moisture, NDVI, and APMC Mandi trends.',
+      title: t('nav_dashboard', 'Executive Farm Dashboard'),
+      description: t('dash_ai_advisory', 'Unified telemetry cockpit monitoring live weather, soil moisture, NDVI, and APMC Mandi trends.'),
       icon: Sprout,
-      tag: 'Core Platform',
+      tag: t('nav_core_management', 'Core Platform'),
       accent: 'border-emerald-500/40 text-emerald-400',
     },
     {
       id: 'crops-disease',
-      title: 'Vision AI Crop Disease Diagnostics',
-      description: 'Instant multi-model leaf and stem inspection with pathogen identification and chemical & organic treatments.',
+      title: t('nav_disease', 'Vision AI Crop Disease Diagnostics'),
+      description: t('crop_detector_subtitle', 'Instant multi-model leaf and stem inspection with pathogen identification and chemical & organic treatments.'),
       icon: ScanEye,
       tag: 'Vision AI',
       accent: 'border-emerald-500/40 text-emerald-300',
     },
     {
       id: 'irrigation',
-      title: 'Smart Precision Irrigation Engine',
-      description: 'Dynamic soil moisture vs. evapotranspiration calculator with automated rainfall delay rules.',
+      title: t('nav_irrigation', 'Smart Precision Irrigation Engine'),
+      description: t('irrig_subtitle', 'Dynamic soil moisture vs. evapotranspiration calculator with automated rainfall delay rules.'),
       icon: Droplets,
       tag: 'Water Tech',
       accent: 'border-sky-500/40 text-sky-400',
     },
     {
       id: 'weather',
-      title: 'Hyper-Local Weather Intelligence',
-      description: '7-day agronomic forecasts, spraying condition index, and precipitation storm alerts.',
+      title: t('nav_weather', 'Hyper-Local Weather Intelligence'),
+      description: t('weather_subtitle', '7-day agronomic forecasts, spraying condition index, and precipitation storm alerts.'),
       icon: CloudRain,
       tag: 'Meteorology',
       accent: 'border-amber-500/40 text-amber-400',
     },
     {
       id: 'market',
-      title: 'Mandi Price & Arbitrage Intelligence',
-      description: 'Live APMC market prices, 7D/30D price trends, and transport-adjusted arbitrage opportunities.',
+      title: t('nav_market', 'Mandi Price & Arbitrage Intelligence'),
+      description: t('market_subtitle', 'Live APMC market prices, 7D/30D price trends, and transport-adjusted arbitrage opportunities.'),
       icon: TrendingUp,
       tag: 'Fintech & APMC',
       accent: 'border-amber-500/40 text-amber-400',
     },
     {
       id: 'farms',
-      title: 'Hierarchical Farm & Field Manager',
-      description: 'Plot-level crop telemetry, IoT valve automation, and task scheduling checklists.',
+      title: t('nav_farms', 'Hierarchical Farm & Field Manager'),
+      description: t('farm_mgmt_subtitle', 'Plot-level crop telemetry, IoT valve automation, and task scheduling checklists.'),
       icon: Tractor,
       tag: 'Agronomy ERP',
       accent: 'border-emerald-500/40 text-emerald-400',
     },
     {
       id: 'supply-chain',
-      title: 'Farm-to-Market Supply Chain Tracker',
-      description: 'Cold-chain dispatch monitoring, QR batch traceability, and digital quality certification.',
+      title: t('nav_supply_chain', 'Farm-to-Market Supply Chain Tracker'),
+      description: t('supply_subtitle', 'Cold-chain dispatch monitoring, QR batch traceability, and digital quality certification.'),
       icon: Truck,
       tag: 'Logistics',
       accent: 'border-sky-500/40 text-sky-400',
@@ -176,18 +176,18 @@ export const LandingPage: React.FC = () => {
         <div className="text-center space-y-6 max-w-4xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold shadow-inner">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>AI Interprets → Rule Engine Validates → Actionable Farming Decisions</span>
+            <span>{t('landing_hero_badge', 'Intelligent Digital Agriculture Platform')}</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white font-display tracking-tight leading-[1.15]">
-            The Intelligence Layer for <br />
+            {t('landing_hero_title_1', 'Empowering Farmers with')} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">
-              Modern Sustainable Agriculture
+              {t('landing_hero_title_2', 'Precision AI & Telemetry')}
             </span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
-            KHETIX connects real-time soil telemetry, hyper-local weather radar, satellite NDVI, and APMC Mandi feeds with agronomic rule engines and Vision AI to maximize farm yields and net profits.
+            {t('landing_hero_subtitle', 'KHETIX connects real-time soil telemetry, hyper-local weather radar, satellite NDVI, and APMC Mandi feeds with agronomic rule engines and Vision AI to maximize farm yields and net profits.')}
           </p>
 
           {/* CTAs */}
@@ -197,7 +197,7 @@ export const LandingPage: React.FC = () => {
                 onClick={() => setActiveModule('dashboard')}
                 className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-extrabold text-sm flex items-center gap-2.5 shadow-xl shadow-emerald-500/20 hover:scale-[1.02] transition cursor-pointer"
               >
-                <span>Open {activeFarm?.name || 'My Farm'} Dashboard</span>
+                <span>{t('landing_cta_launch', 'Open Executive Dashboard')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
@@ -207,7 +207,7 @@ export const LandingPage: React.FC = () => {
                   className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-extrabold text-sm flex items-center gap-2.5 shadow-xl shadow-emerald-500/20 hover:scale-[1.02] transition cursor-pointer"
                 >
                   <UserPlus className="w-4 h-4" />
-                  <span>Register Farm & Location</span>
+                  <span>{t('header_register', 'Register Farm & Location')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
@@ -216,7 +216,7 @@ export const LandingPage: React.FC = () => {
                   className="px-6 py-3.5 rounded-xl bg-[#0d2e20] hover:bg-[#123828] border border-emerald-500/30 text-slate-200 hover:text-white font-bold text-sm flex items-center gap-2 transition"
                 >
                   <Lock className="w-4 h-4 text-emerald-400" />
-                  <span>Farmer Sign In</span>
+                  <span>{t('header_sign_in', 'Farmer Sign In')}</span>
                 </button>
               </>
             )}
@@ -226,7 +226,7 @@ export const LandingPage: React.FC = () => {
               className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 border border-emerald-500/40 text-emerald-300 hover:text-white font-bold text-sm flex items-center gap-2 transition cursor-pointer shadow-lg"
             >
               <Bot className="w-4 h-4 text-emerald-400" />
-              <span>🗣️ Ask KHETIX AI Advisor (Voice & 11 Langs)</span>
+              <span>🗣️ {t('nav_assistant', 'AI Farm Advisor')}</span>
             </button>
           </div>
         </div>
@@ -235,11 +235,11 @@ export const LandingPage: React.FC = () => {
         <div className="space-y-3 mb-14">
           <div className="flex items-center justify-between px-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-bold tracking-wider text-emerald-400">Live 3D Digital Twin</span>
-              <span className="text-xs text-slate-400 hidden sm:inline">• {activeFarm?.name || 'My Farm'} ({activeFarm?.totalAcres || 12} Acres, {activeFarm?.location?.split(',')[0] || 'India'})</span>
+              <span className="text-xs uppercase font-bold tracking-wider text-emerald-400">{t('dash_3d_twin_title', 'Live 3D Digital Twin')}</span>
+              <span className="text-xs text-slate-400 hidden sm:inline">• {activeFarm?.name || t('header_my_farm', 'My Farm')} ({activeFarm?.totalAcres || 12} {t('common_acres', 'Acres')})</span>
             </div>
             <div className="text-xs text-slate-400">
-              Interactive WebGL Twin
+              {t('dash_view_3d', 'Interactive WebGL Twin')}
             </div>
           </div>
           <FarmScene3D className="w-full h-[460px]" />
@@ -312,7 +312,7 @@ export const LandingPage: React.FC = () => {
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-emerald-500/10 flex items-center justify-between text-xs font-semibold text-emerald-400 group-hover:text-emerald-300">
-                  <span>Explore Module</span>
+                  <span>{t('common_details', 'Explore Module')}</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition" />
                 </div>
               </div>
@@ -323,10 +323,10 @@ export const LandingPage: React.FC = () => {
         {/* Bottom Banner */}
         <div className="mt-14 p-8 rounded-3xl bg-gradient-to-r from-[#0d2e20] via-[#09291b] to-[#0d2e20] border border-emerald-500/30 text-center space-y-4">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-display">
-            Ready to empower your farm with intelligence?
+            {t('landing_hero_title_1', 'Ready to empower your farm with intelligence?')}
           </h3>
           <p className="text-sm text-slate-300 max-w-xl mx-auto">
-            Connect your field location, run AI vision leaf scans, monitor hyper-local radar forecasts, and track nearby APMC mandi arbitrage.
+            {t('landing_hero_subtitle', 'Connect your field location, run AI vision leaf scans, monitor hyper-local radar forecasts, and track nearby APMC mandi arbitrage.')}
           </p>
           <button
             onClick={() => {
@@ -338,7 +338,7 @@ export const LandingPage: React.FC = () => {
             }}
             className="px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm inline-flex items-center gap-2 shadow-xl shadow-emerald-500/20 transition cursor-pointer"
           >
-            <span>{currentUser ? 'Enter Executive Dashboard' : 'Register Your Farm Now'}</span>
+            <span>{currentUser ? t('landing_cta_launch', 'Enter Executive Dashboard') : t('header_register', 'Register Your Farm Now')}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

@@ -49,16 +49,16 @@ export const ExecutiveDashboard: React.FC = () => {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-5 rounded-2xl bg-[#0a2318]/90 backdrop-blur-md border border-emerald-500/20 shadow-xl">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xl">👋</span>
+            <span className="text-xl">🌾</span>
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Good Morning, {activeFarm?.farmerName || 'Farmer'}!
+              {t('good_morning', 'Good Morning')}, {activeFarm?.farmerName || 'Farmer'}!
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
-              Active Telemetry
+              {t('active_telemetry', 'Active Telemetry')}
             </span>
           </div>
           <div className="flex items-center gap-2 flex-wrap text-xs text-slate-300">
-            <span>{activeFarm?.name || 'My Farm'} • {activeFarm?.totalAcres || 0} Total Acres • Primary:</span>
+            <span>{activeFarm?.name || t('header_my_farm', 'My Farm')} • {activeFarm?.totalAcres || 0} {t('common_acres', 'Total Acres')} • {t('primary_crops', 'Primary')}:</span>
             <span className="text-emerald-400 font-semibold">
               {(activeFarm?.primaryCrops && activeFarm.primaryCrops.length > 0)
                 ? activeFarm.primaryCrops.join(', ')
@@ -67,7 +67,7 @@ export const ExecutiveDashboard: React.FC = () => {
             <button
               onClick={() => setActiveModule('farmer-profile')}
               className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-medium transition"
-              title="Change Farm Location & GPS"
+              title={t('header_change_location', 'Change Farm Location & GPS')}
             >
               <MapPin className="w-3 h-3 text-emerald-400" />
               <span>{activeFarm?.district || 'Nashik'}, {activeFarm?.state || 'Maharashtra'}</span>
@@ -82,7 +82,7 @@ export const ExecutiveDashboard: React.FC = () => {
             className="px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1.5 transition shadow-sm hover:scale-[1.02]"
           >
             <ScanEye className="w-4 h-4" />
-            <span>Scan Leaf AI</span>
+            <span>{t('dash_scan_leaf_quick', 'Scan Leaf AI')}</span>
           </button>
 
           <button
@@ -90,7 +90,7 @@ export const ExecutiveDashboard: React.FC = () => {
             className="px-3.5 py-2 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/30 text-sky-300 text-xs font-bold flex items-center gap-1.5 transition shadow-sm hover:scale-[1.02]"
           >
             <Droplets className="w-4 h-4" />
-            <span>Log Irrigation</span>
+            <span>{t('dash_log_irrigation_quick', 'Log Irrigation')}</span>
           </button>
 
           <button
@@ -98,7 +98,7 @@ export const ExecutiveDashboard: React.FC = () => {
             className="px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1.5 transition shadow-sm hover:scale-[1.02]"
           >
             <TrendingUp className="w-4 h-4" />
-            <span>Check Mandi</span>
+            <span>{t('dash_check_mandi_quick', 'Check Mandi')}</span>
           </button>
 
           <button
@@ -106,7 +106,7 @@ export const ExecutiveDashboard: React.FC = () => {
             className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-950 text-xs font-extrabold flex items-center gap-1.5 transition shadow-md hover:scale-[1.02]"
           >
             <Bot className="w-4 h-4" />
-            <span>Ask AI Advisory</span>
+            <span>{t('dash_ask_ai_quick', 'Ask AI Advisory')}</span>
           </button>
         </div>
       </div>
@@ -119,18 +119,18 @@ export const ExecutiveDashboard: React.FC = () => {
           className="p-5 rounded-2xl bg-[#0a2318]/80 hover:bg-[#0d2e20] border border-emerald-500/20 hover:border-emerald-500/40 transition shadow-lg cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Weather Radar</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('dash_kpi_weather', 'Weather Radar')}</span>
             <div className="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 group-hover:scale-110 transition">
               <CloudRain className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-extrabold text-white font-display">28°C</span>
-            <span className="text-xs font-semibold text-sky-400">78% Humidity</span>
+            <span className="text-xs font-semibold text-sky-400">78% {t('weather_humidity', 'Humidity')}</span>
           </div>
           <div className="mt-3 flex items-center gap-1.5 text-xs text-amber-400 font-medium">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-            <span>{rainProbabilityOverride}% Rain Alert Tomorrow</span>
+            <span>{rainProbabilityOverride}% {t('rain_alert', 'Rain Alert')}</span>
           </div>
         </div>
 
@@ -140,18 +140,18 @@ export const ExecutiveDashboard: React.FC = () => {
           className="p-5 rounded-2xl bg-[#0a2318]/80 hover:bg-[#0d2e20] border border-emerald-500/20 hover:border-emerald-500/40 transition shadow-lg cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Soil Moisture</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('dash_kpi_soil_moisture', 'Soil Moisture')}</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
               <Droplets className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-extrabold text-white font-display">{soilMoistureOverride}%</span>
-            <span className="text-xs font-semibold text-emerald-400">Field Capacity</span>
+            <span className="text-xs font-semibold text-emerald-400">{t('dash_field_capacity', 'Field Capacity')}</span>
           </div>
           <div className="mt-3 text-xs text-slate-300 flex items-center justify-between">
-            <span>Valves Standby</span>
-            <span className="text-emerald-400 font-bold">Rule Engine Active</span>
+            <span>{t('dash_valves_standby', 'Valves Standby')}</span>
+            <span className="text-emerald-400 font-bold">{t('dash_rule_active', 'Rule Engine Active')}</span>
           </div>
         </div>
 
@@ -161,18 +161,18 @@ export const ExecutiveDashboard: React.FC = () => {
           className="p-5 rounded-2xl bg-[#0a2318]/80 hover:bg-[#0d2e20] border border-emerald-500/20 hover:border-emerald-500/40 transition shadow-lg cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Crop Health Score</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('dash_kpi_crop_health', 'Crop Health Score')}</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
               <Sprout className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-extrabold text-white font-display">92%</span>
-            <span className="text-xs font-semibold text-emerald-400">+4% this week</span>
+            <span className="text-xs font-semibold text-emerald-400">{t('common_healthy', 'Healthy')}</span>
           </div>
           <div className="mt-3 text-xs text-slate-300 flex items-center justify-between">
-            <span>Avg NDVI: 0.84</span>
-            <span className="text-emerald-400 font-semibold">Vigorous</span>
+            <span>NDVI: 0.84</span>
+            <span className="text-emerald-400 font-semibold">{t('common_vigorous', 'Vigorous')}</span>
           </div>
         </div>
 
@@ -182,7 +182,7 @@ export const ExecutiveDashboard: React.FC = () => {
           className="p-5 rounded-2xl bg-[#0a2318]/80 hover:bg-[#0d2e20] border border-emerald-500/20 hover:border-emerald-500/40 transition shadow-lg cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Mandi Index (Tomato)</span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('dash_kpi_mandi_index', 'Mandi Index')}</span>
             <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition">
               <TrendingUp className="w-4 h-4" />
             </div>
@@ -206,8 +206,8 @@ export const ExecutiveDashboard: React.FC = () => {
           <div className="p-4 rounded-2xl bg-[#0a2318]/90 border border-emerald-500/20 shadow-xl">
             <div className="flex items-center justify-between mb-3 px-1">
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-sm text-white font-display">Interactive Farm Field Telemetry</span>
-                <span className="text-xs text-slate-400">• Click markers for field stats</span>
+                <span className="font-extrabold text-sm text-white font-display">{t('dash_3d_twin_title', 'Interactive Farm Field Telemetry')}</span>
+                <span className="text-xs text-slate-400">• {t('dash_3d_click_hint', 'Click markers for field stats')}</span>
               </div>
 
               <div className="flex items-center gap-1.5 p-1 rounded-lg bg-black/40 border border-white/5 text-xs">
@@ -217,7 +217,7 @@ export const ExecutiveDashboard: React.FC = () => {
                     activeTab === '3d' ? 'bg-emerald-500/20 text-emerald-300' : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  3D View
+                  {t('dash_view_3d', '3D View')}
                 </button>
                 <button
                   onClick={() => setActiveTab('fields')}
@@ -225,7 +225,7 @@ export const ExecutiveDashboard: React.FC = () => {
                     activeTab === 'fields' ? 'bg-emerald-500/20 text-emerald-300' : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  Field Cards
+                  {t('dash_view_fields', 'Field Cards')}
                 </button>
               </div>
             </div>
@@ -242,7 +242,7 @@ export const ExecutiveDashboard: React.FC = () => {
                     >
                       <div className="flex items-center justify-between">
                         <h4 className="font-bold text-white text-xs truncate">
-                          {f.name ? f.name.split('—')[0] : 'Field Plot'}
+                          {f.name ? f.name.split('—')[0] : t('nav_farms', 'Field Plot')}
                         </h4>
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -251,12 +251,12 @@ export const ExecutiveDashboard: React.FC = () => {
                             : 'bg-amber-500/20 text-amber-300'
                         }`}
                       >
-                        {f.status}
+                        {f.status === 'Healthy' ? t('common_healthy', 'Healthy') : t('common_warning', f.status)}
                       </span>
                     </div>
                     <p className="text-[11px] text-emerald-400 font-medium">{f.crop}</p>
                     <div className="grid grid-cols-2 gap-1 text-[11px] text-slate-300">
-                      <div>Moisture: <strong className="text-white">{f.moisture}%</strong></div>
+                      <div>{t('dash_kpi_soil_moisture', 'Moisture')}: <strong className="text-white">{f.moisture}%</strong></div>
                       <div>NDVI: <strong className="text-sky-400">{f.ndvi}</strong></div>
                     </div>
                     <button
@@ -267,13 +267,13 @@ export const ExecutiveDashboard: React.FC = () => {
                           : 'bg-black/40 border-white/10 text-slate-300 hover:bg-white/5'
                       }`}
                     >
-                      {f.valvesOpen ? '💧 Drip Valve Open' : '⭕ Valve Standby'}
+                      {f.valvesOpen ? `💧 ${t('dash_valve_open', 'Drip Valve Open')}` : `⭕ ${t('dash_valves_standby', 'Valve Standby')}`}
                     </button>
                   </div>
                 ))
                 ) : (
                   <div className="col-span-3 text-center py-6 text-slate-400 text-xs">
-                    No field plots configured yet. Open Farm Management to register plots.
+                    {t('dash_no_fields', 'No field plots configured yet. Open Farm Management to register plots.')}
                   </div>
                 )}
               </div>
@@ -283,7 +283,7 @@ export const ExecutiveDashboard: React.FC = () => {
             <div className="mt-4 pt-3 border-t border-emerald-500/10 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Simulate Soil Moisture</span>
+                  <span className="text-slate-400 block text-[11px]">{t('dash_simulate_moisture', 'Simulate Soil Moisture')}</span>
                   <span className="font-bold text-emerald-400">{soilMoistureOverride}%</span>
                 </div>
                 <input
@@ -298,7 +298,7 @@ export const ExecutiveDashboard: React.FC = () => {
 
               <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Simulate Rain Forecast</span>
+                  <span className="text-slate-400 block text-[11px]">{t('dash_simulate_rain', 'Simulate Rain Forecast')}</span>
                   <span className="font-bold text-sky-400">{rainProbabilityOverride}%</span>
                 </div>
                 <input
@@ -321,7 +321,7 @@ export const ExecutiveDashboard: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-emerald-400 font-extrabold text-xs">
                 <Sparkles className="w-4 h-4" />
-                <span>AI Advisory & Decision Rule</span>
+                <span>{t('dash_ai_advisory', 'AI Advisory & Decision Rule')}</span>
               </div>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
                 irrigationDecision.badgeType === 'critical' ? 'bg-red-500/20 text-red-300' : 'bg-emerald-500/20 text-emerald-300'
@@ -344,7 +344,7 @@ export const ExecutiveDashboard: React.FC = () => {
             </ul>
 
             <div className="pt-2 flex items-center justify-between border-t border-emerald-500/20 text-xs">
-              <span className="text-slate-400">Est. Water Saved</span>
+              <span className="text-slate-400">{t('dash_water_saved', 'Est. Water Saved')}</span>
               <strong className="text-sky-400">{irrigationDecision.waterSavingsLiters.toLocaleString()} Liters</strong>
             </div>
 
@@ -353,13 +353,13 @@ export const ExecutiveDashboard: React.FC = () => {
               className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer"
             >
               <Bot className="w-4 h-4" />
-              <span>Ask KHETIX for Detailed Spray Protocol</span>
+              <span>{t('dash_spray_protocol_btn', 'Ask KHETIX for Detailed Spray Protocol')}</span>
             </button>
           </div>
 
           {/* Quick Module Jump Links */}
           <div className="p-4 rounded-2xl bg-[#0a2318]/90 border border-emerald-500/20 space-y-2">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Recommended Next Tasks</h4>
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">{t('dash_next_tasks_title', 'Recommended Next Tasks')}</h4>
             
             <button
               onClick={() => setActiveModule('crops-disease')}
@@ -367,7 +367,7 @@ export const ExecutiveDashboard: React.FC = () => {
             >
               <div className="flex items-center gap-2.5">
                 <ScanEye className="w-4 h-4 text-emerald-400" />
-                <span>Inspect Field A Foliage (Early Blight Check)</span>
+                <span>{t('nav_disease', 'Vision AI Crop Disease')}</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />
             </button>
@@ -378,7 +378,7 @@ export const ExecutiveDashboard: React.FC = () => {
             >
               <div className="flex items-center gap-2.5">
                 <Layers className="w-4 h-4 text-cyan-400" />
-                <span>Check Sentinel-2 NDVI False Color Heatmap</span>
+                <span>{t('nav_satellite', 'Satellite NDVI Heatmap')}</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />
             </button>
@@ -389,7 +389,7 @@ export const ExecutiveDashboard: React.FC = () => {
             >
               <div className="flex items-center gap-2.5">
                 <TrendingUp className="w-4 h-4 text-amber-400" />
-                <span>Compare Azadpur vs Vashi Net Realization</span>
+                <span>{t('nav_market', 'Mandi Intelligence & Arbitrage')}</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />
             </button>

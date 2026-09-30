@@ -30,7 +30,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => {
-  const { activeModule, setActiveModule, unreadCount } = useFarm();
+  const { activeModule, setActiveModule, unreadCount, t } = useFarm();
 
   const navGroups: {
     title: string;
@@ -43,41 +43,41 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
     }[];
   }[] = [
     {
-      title: 'Core Management',
+      title: t('nav_core_management', 'Core Management'),
       items: [
-        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, color: 'text-emerald-400' },
-        { id: 'farmer-profile', label: 'Farm Locations & GPS', icon: Compass, badge: 'All India', color: 'text-emerald-300' },
-        { id: 'farms', label: 'Farms & Fields', icon: Tractor, color: 'text-amber-400' },
-        { id: 'supply-chain', label: 'Supply Chain', icon: Truck, color: 'text-sky-400' },
+        { id: 'dashboard', label: t('nav_dashboard', 'Dashboard'), icon: LayoutDashboard, color: 'text-emerald-400' },
+        { id: 'farmer-profile', label: t('nav_location', 'Farm Locations & GPS'), icon: Compass, badge: 'All India', color: 'text-emerald-300' },
+        { id: 'farms', label: t('nav_farms', 'Farms & Fields'), icon: Tractor, color: 'text-amber-400' },
+        { id: 'supply-chain', label: t('nav_supply_chain', 'Supply Chain'), icon: Truck, color: 'text-sky-400' },
       ],
     },
     {
-      title: 'Agronomy & Sensors',
+      title: t('nav_agronomy_sensors', 'Agronomy & Sensors'),
       items: [
-        { id: 'crops-disease', label: 'Vision AI Diagnostics', icon: ScanEye, badge: 'AI', color: 'text-emerald-400' },
-        { id: 'irrigation', label: 'Smart Irrigation', icon: Droplets, color: 'text-sky-400' },
-        { id: 'weather', label: 'Weather Intel', icon: CloudSun, color: 'text-amber-400' },
-        { id: 'crops-recommend', label: 'Crop Recommender', icon: Wheat, color: 'text-emerald-400' },
-        { id: 'soil', label: 'Soil Health', icon: FlaskConical, color: 'text-orange-400' },
+        { id: 'crops-disease', label: t('nav_disease', 'Vision AI Diagnostics'), icon: ScanEye, badge: 'AI', color: 'text-emerald-400' },
+        { id: 'irrigation', label: t('nav_irrigation', 'Smart Irrigation'), icon: Droplets, color: 'text-sky-400' },
+        { id: 'weather', label: t('nav_weather', 'Weather Intel'), icon: CloudSun, color: 'text-amber-400' },
+        { id: 'crops-recommend', label: t('nav_crops_recommend', 'Crop Recommender'), icon: Wheat, color: 'text-emerald-400' },
+        { id: 'soil', label: t('nav_soil', 'Soil Health'), icon: FlaskConical, color: 'text-orange-400' },
       ],
     },
     {
-      title: 'Commerce & Cattle',
+      title: t('nav_commerce_cattle', 'Commerce & Cattle'),
       items: [
-        { id: 'market', label: 'Mandi Intelligence', icon: TrendingUp, color: 'text-amber-400' },
-        { id: 'marketplace', label: 'Agri Store', icon: ShoppingBag, color: 'text-emerald-400' },
-        { id: 'livestock', label: 'Livestock & Dairy', icon: Milk, color: 'text-sky-400' },
-        { id: 'analytics', label: 'Farm Analytics', icon: LineChart, color: 'text-emerald-400' },
+        { id: 'market', label: t('nav_market', 'Mandi Intelligence'), icon: TrendingUp, color: 'text-amber-400' },
+        { id: 'marketplace', label: t('nav_marketplace', 'Agri Store'), icon: ShoppingBag, color: 'text-emerald-400' },
+        { id: 'livestock', label: t('nav_livestock', 'Livestock & Dairy'), icon: Milk, color: 'text-sky-400' },
+        { id: 'analytics', label: t('nav_analytics', 'Farm Analytics'), icon: LineChart, color: 'text-emerald-400' },
       ],
     },
     {
-      title: 'Intelligence & ESG',
+      title: t('nav_intelligence_esg', 'Intelligence & ESG'),
       items: [
-        { id: 'satellite', label: 'Satellite NDVI', icon: Satellite, color: 'text-cyan-400' },
-        { id: 'sustainability', label: 'Sustainability & ESG', icon: Leaf, color: 'text-emerald-400' },
-        { id: 'finance', label: 'Finance & Schemes', icon: Landmark, color: 'text-amber-400' },
-        { id: 'assistant', label: 'AI Farm Advisor', icon: Bot, badge: 'Live', color: 'text-emerald-300' },
-        { id: 'reports', label: 'Audit Report', icon: FileCheck2, color: 'text-slate-300' },
+        { id: 'satellite', label: t('nav_satellite', 'Satellite NDVI'), icon: Satellite, color: 'text-cyan-400' },
+        { id: 'sustainability', label: t('nav_sustainability', 'Sustainability & ESG'), icon: Leaf, color: 'text-emerald-400' },
+        { id: 'finance', label: t('nav_finance', 'Finance & Schemes'), icon: Landmark, color: 'text-amber-400' },
+        { id: 'assistant', label: t('nav_assistant', 'AI Farm Advisor'), icon: Bot, badge: 'Live', color: 'text-emerald-300' },
+        { id: 'reports', label: t('nav_reports', 'Audit Report'), icon: FileCheck2, color: 'text-slate-300' },
       ],
     },
   ];
@@ -109,7 +109,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
           title="KHETIX Overview & Showcase"
         >
           <Compass className="w-4 h-4 text-emerald-400 shrink-0" />
-          {!collapsed && <span>Platform Overview</span>}
+          {!collapsed && <span>{t('nav_overview', 'Platform Overview')}</span>}
         </button>
       </div>
 
