@@ -15,7 +15,7 @@ import { useFarm } from '../../lib/context/FarmContext';
 export const SoilHealthDiagnostics: React.FC = () => {
   const { activeFarm, setActiveModule } = useFarm();
 
-  const [selectedField, setSelectedField] = useState(activeFarm.fields[0]?.id || 'field-1');
+  const [selectedField, setSelectedField] = useState(activeFarm?.fields?.[0]?.id || 'field-1');
 
   const soilMetrics = [
     { label: 'Available Nitrogen (N)', value: '235 kg/ha', status: 'Medium', benchmark: '280-560 kg/ha', color: 'text-amber-400', progress: 54 },

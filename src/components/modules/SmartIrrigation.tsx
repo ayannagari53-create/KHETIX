@@ -30,11 +30,13 @@ export const SmartIrrigation: React.FC = () => {
   const [emitterSpacingCm, setEmitterSpacingCm] = useState<number>(40);
   const [activeRuntimeField, setActiveRuntimeField] = useState<string | null>(null);
 
+  const activeCrop = activeFarm?.primaryCrops?.[0] || activeFarm?.primaryCrop || 'Tomato';
+
   const decision = evaluateIrrigationDecision(
     soilMoistureOverride,
     rainProbabilityOverride,
     18,
-    activeFarm.primaryCrops[0] || 'Tomato'
+    activeCrop
   );
 
   return (
@@ -182,11 +184,12 @@ export const SmartIrrigation: React.FC = () => {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {activeFarm.fields.map((field) => (
-            <div
-              key={field.id}
-              className="p-5 rounded-2xl bg-[#0a2318] border border-emerald-500/20 shadow-xl space-y-4"
-            >
+          {(activeFarm?.fields && activeFarm.fields.length > 0) ? (
+            activeFarm.fields.map((field) => (
+              <div
+                key={field.id}
+                className="p-5 rounded-2xl bg-[#0a2318] border border-emerald-500/20 shadow-xl space-y-4"
+              >
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="font-bold text-white text-sm">{field.name}</h4>
@@ -237,7 +240,12 @@ export const SmartIrrigation: React.FC = () => {
                 <span>{field.valvesOpen ? 'Solenoid Valve OPEN (Irrigating)' : 'Override & Open Valve'}</span>
               </button>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="col-span-3 text-center py-8 text-slate-400 text-xs bg-[#0a2318] rounded-2xl border border-emerald-500/20">
+            No field plots currently monitored for irrigation. Add fields in Farm Management.
+          </div>
+        )}
         </div>
       </div>
     </div>

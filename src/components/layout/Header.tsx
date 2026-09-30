@@ -42,12 +42,14 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup');
 
   const farmerName = currentUser?.name || activeFarm?.farmerName || 'Farmer';
-  const farmerInitials = farmerName
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase() || 'KH';
+  const farmerInitials =
+    farmerName
+      .split(' ')
+      .filter(Boolean)
+      .map((n) => n[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase() || 'KH';
 
   const kisanId = currentUser?.kisanId || 'KISAN-IN-2026';
 

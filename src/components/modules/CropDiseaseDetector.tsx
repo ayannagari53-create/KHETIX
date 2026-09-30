@@ -140,7 +140,12 @@ export const CropDiseaseDetector: React.FC = () => {
       return;
     }
 
-    const textToRead = `Crop: ${detectedCropName}. Condition: ${activeDiagnosis.diseaseName}. Confidence: ${detectionConfidence} percent. Severity: ${activeDiagnosis.severity}. Detected symptoms include: ${activeDiagnosis.symptoms.slice(0, 2).join(', ')}. Recommended action: ${activeDiagnosis.nonChemicalPreventative[0] || activeDiagnosis.chemicalTreatment[0]}. Notice: AI-based identification is advisory.`;
+    const action =
+      activeDiagnosis?.nonChemicalPreventative?.[0] ||
+      activeDiagnosis?.chemicalTreatment?.[0] ||
+      'Observe standard preventative field care.';
+    const symptomsList = (activeDiagnosis?.symptoms || []).slice(0, 2).join(', ');
+    const textToRead = `Crop: ${detectedCropName}. Condition: ${activeDiagnosis?.diseaseName || 'Condition'}. Confidence: ${detectionConfidence} percent. Severity: ${activeDiagnosis?.severity || 'Moderate'}. Detected symptoms include: ${symptomsList}. Recommended action: ${action}. Notice: AI-based identification is advisory.`;
 
     setIsSpeaking(true);
     speakText(
@@ -290,7 +295,7 @@ export const CropDiseaseDetector: React.FC = () => {
       fieldId: 'field-1',
       fieldName: 'Field A',
       crop: detectedCropName,
-      note: `Diagnostic Foliage Scan: ${activeDiagnosis.diseaseName} (${detectionConfidence}% confidence). Severity: ${activeDiagnosis.severity}. Pathogen: ${activeDiagnosis.pathogen}. Recommended spray: ${activeDiagnosis.chemicalTreatment[0]}`,
+      note: `Diagnostic Foliage Scan: ${activeDiagnosis?.diseaseName || 'Scanned Leaf'} (${detectionConfidence}% confidence). Severity: ${activeDiagnosis?.severity || 'Normal'}. Pathogen: ${activeDiagnosis?.pathogen || 'None'}. Recommended spray: ${activeDiagnosis?.chemicalTreatment?.[0] || activeDiagnosis?.nonChemicalPreventative?.[0] || 'Standard preventative management'}`,
       tag: 'Health Observation',
       sentiment: activeDiagnosis.severity === 'Healthy' ? 'good' : 'warning',
       loggedBy: 'Vision AI Diagnostic Engine',

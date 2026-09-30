@@ -34,11 +34,13 @@ export const ExecutiveDashboard: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<'3d' | 'fields'>('3d');
 
+  const activeCrop = activeFarm?.primaryCrops?.[0] || activeFarm?.primaryCrop || 'Tomato';
+
   const irrigationDecision = evaluateIrrigationDecision(
     soilMoistureOverride,
     rainProbabilityOverride,
     18,
-    activeFarm.primaryCrops[0] || 'Tomato'
+    activeCrop
   );
 
   return (
@@ -49,22 +51,26 @@ export const ExecutiveDashboard: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xl">👋</span>
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Good Morning, {activeFarm.farmerName}!
+              Good Morning, {activeFarm?.farmerName || 'Farmer'}!
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
               Active Telemetry
             </span>
           </div>
           <div className="flex items-center gap-2 flex-wrap text-xs text-slate-300">
-            <span>{activeFarm.name} • {activeFarm.totalAcres} Total Acres • Primary:</span>
-            <span className="text-emerald-400 font-semibold">{activeFarm.primaryCrops.join(', ')}</span>
+            <span>{activeFarm?.name || 'My Farm'} • {activeFarm?.totalAcres || 0} Total Acres • Primary:</span>
+            <span className="text-emerald-400 font-semibold">
+              {(activeFarm?.primaryCrops && activeFarm.primaryCrops.length > 0)
+                ? activeFarm.primaryCrops.join(', ')
+                : (activeFarm?.primaryCrop || 'Tomato')}
+            </span>
             <button
               onClick={() => setActiveModule('farmer-profile')}
               className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-medium transition"
               title="Change Farm Location & GPS"
             >
               <MapPin className="w-3 h-3 text-emerald-400" />
-              <span>{activeFarm.district || 'Nashik'}, {activeFarm.state || 'Maharashtra'}</span>
+              <span>{activeFarm?.district || 'Nashik'}, {activeFarm?.state || 'Maharashtra'}</span>
             </button>
           </div>
         </div>
@@ -228,13 +234,16 @@ export const ExecutiveDashboard: React.FC = () => {
               <FarmScene3D className="w-full h-[400px]" />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1">
-                {activeFarm.fields.map((f) => (
-                  <div
-                    key={f.id}
-                    className="p-4 rounded-xl bg-[#0d2e20] border border-emerald-500/30 space-y-2.5"
-                  >
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-bold text-white text-xs truncate">{f.name.split('—')[0]}</h4>
+                {(activeFarm?.fields && activeFarm.fields.length > 0) ? (
+                  activeFarm.fields.map((f) => (
+                    <div
+                      key={f.id}
+                      className="p-4 rounded-xl bg-[#0d2e20] border border-emerald-500/30 space-y-2.5"
+                    >
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-bold text-white text-xs truncate">
+                          {f.name ? f.name.split('—')[0] : 'Field Plot'}
+                        </h4>
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                           f.status === 'Healthy'
@@ -261,7 +270,12 @@ export const ExecutiveDashboard: React.FC = () => {
                       {f.valvesOpen ? '💧 Drip Valve Open' : '⭕ Valve Standby'}
                     </button>
                   </div>
-                ))}
+                ))
+                ) : (
+                  <div className="col-span-3 text-center py-6 text-slate-400 text-xs">
+                    No field plots configured yet. Open Farm Management to register plots.
+                  </div>
+                )}
               </div>
             )}
 

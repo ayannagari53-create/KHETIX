@@ -84,7 +84,11 @@ export const ReportGenerator: React.FC = () => {
           </div>
           <div>
             <span className="text-slate-500 block text-[10px] uppercase font-bold">Primary Monitored Crop</span>
-            <strong className="text-emerald-800 text-sm">{activeFarm.primaryCrops.join(', ')}</strong>
+            <strong className="text-emerald-800 text-sm">
+              {(activeFarm?.primaryCrops && activeFarm.primaryCrops.length > 0)
+                ? activeFarm.primaryCrops.join(', ')
+                : (activeFarm?.primaryCrop || 'Tomato')}
+            </strong>
           </div>
         </div>
 

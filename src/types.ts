@@ -56,6 +56,7 @@ export interface Farm {
   district?: string;
   taluk?: string;
   village?: string;
+  khasraNumber?: string;
   totalAcres: number;
   cultivableAcres?: number;
   irrigatedAcres?: number;
@@ -224,6 +225,7 @@ export interface UserAccount {
   district?: string;
   taluk?: string;
   village?: string;
+  farmName?: string;
   kisanId?: string;
   totalAcres?: number;
   primaryCrop?: string;

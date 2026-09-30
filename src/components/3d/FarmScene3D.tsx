@@ -650,7 +650,7 @@ export const FarmScene3D: React.FC<FarmScene3DProps> = ({
             <div className="p-1.5 rounded-lg bg-black/40 border border-white/5">
               <span className="text-[10px] text-slate-400 block">Status</span>
               <span className="font-semibold text-[11px] text-emerald-300 truncate block">
-                {selectedHotspot.health.split(' ')[0]}
+                {selectedHotspot.health ? selectedHotspot.health.split(' ')[0] : 'Active'}
               </span>
             </div>
           </div>

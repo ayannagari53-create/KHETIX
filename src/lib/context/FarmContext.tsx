@@ -88,7 +88,7 @@ export interface SignupInput {
   emailOrPhone?: string;
   password?: string;
   farmName?: string;
-  state: string;
+  state?: string;
   district?: string;
   taluk?: string;
   village?: string;
@@ -187,12 +187,11 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [farms, setFarms] = useState<Farm[]>(() => {
     const saved = localStorage.getItem('khetix_farms');
-    // Never seed fake/demo farms — start empty for real users
-    return saved ? JSON.parse(saved) : [];
+    return saved && JSON.parse(saved).length > 0 ? JSON.parse(saved) : INITIAL_FARMS;
   });
 
   const [activeFarmId, setActiveFarmIdState] = useState<string>(() => {
-    return localStorage.getItem('khetix_active_farm_id') || '';
+    return localStorage.getItem('khetix_active_farm_id') || INITIAL_FARMS[0]?.id || '';
   });
 
   const [activeModule, setActiveModuleState] = useState<NavigationModule>(() => {
@@ -208,8 +207,7 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [notifications, setNotifications] = useState<AlertNotification[]>(() => {
     const saved = localStorage.getItem('khetix_notifications');
-    // Start with empty notifications — never pre-populate with demo data
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_NOTIFICATIONS;
   });
 
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -228,42 +226,42 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [todayPlan, setTodayPlan] = useState<TodayFarmPlanItem[]>(() => {
     const saved = localStorage.getItem('khetix_today_plan');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_TODAY_PLAN;
   });
 
   const [todayTasks, setTodayTasks] = useState<TodayTaskItem[]>(() => {
     const saved = localStorage.getItem('khetix_today_tasks');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_TODAY_TASKS;
   });
 
   const [calendarEvents, setCalendarEvents] = useState<FarmCalendarEvent[]>(() => {
     const saved = localStorage.getItem('khetix_calendar_events');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_CALENDAR_EVENTS;
   });
 
   const [inventory, setInventory] = useState<InventoryItem[]>(() => {
     const saved = localStorage.getItem('khetix_inventory');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_INVENTORY;
   });
 
   const [expenses, setExpenses] = useState<ExpenseRecord[]>(() => {
     const saved = localStorage.getItem('khetix_expenses');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_EXPENSES;
   });
 
   const [labour, setLabour] = useState<LabourWorker[]>(() => {
     const saved = localStorage.getItem('khetix_labour');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_LABOUR;
   });
 
   const [journal, setJournal] = useState<FarmJournalEntry[]>(() => {
     const saved = localStorage.getItem('khetix_journal');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_JOURNAL;
   });
 
   const [documents, setDocuments] = useState<FarmDocument[]>(() => {
     const saved = localStorage.getItem('khetix_documents');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : INITIAL_DOCUMENTS;
   });
 
   const [quickActionTrigger, setQuickActionTrigger] = useState<string | null>(null);
@@ -411,20 +409,25 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('khetix_orders', JSON.stringify(orders));
   }, [orders]);
 
-  // Empty placeholder — never show fake location/crop data
   const defaultFarm: Farm = {
     id: 'farm-default',
-    name: '',
-    farmerName: currentUser?.name || '',
-    location: '',
-    state: '',
-    district: '',
-    totalAcres: 0,
-    primaryCrop: '',
-    soilType: '',
-    soilMoisture: 0,
-    rainProbability: 0,
-    fields: [],
+    name: currentUser?.farmName || (currentUser?.name ? `${currentUser.name}'s Farm` : 'Green Acres Farm'),
+    farmerName: currentUser?.name || 'Ramesh Kumar',
+    location:
+      [currentUser?.village, currentUser?.taluk, currentUser?.district, currentUser?.state]
+        .filter(Boolean)
+        .join(', ') || 'Nashik Valley, Maharashtra',
+    state: currentUser?.state || 'Maharashtra',
+    district: currentUser?.district || 'Nashik',
+    totalAcres: currentUser?.totalAcres || 24,
+    primaryCrop: currentUser?.primaryCrop || 'Tomato (Abhinav F1)',
+    primaryCrops: currentUser?.primaryCrop
+      ? [currentUser.primaryCrop, 'Sweet Corn']
+      : ['Tomato (Abhinav F1)', 'Sweet Corn', 'Pomegranate'],
+    soilType: 'Sandy Loam (Medium Deep)',
+    soilMoisture: 64,
+    rainProbability: 25,
+    fields: INITIAL_FARMS[0]?.fields || [],
   };
 
   const hasFarms = farms.length > 0;
