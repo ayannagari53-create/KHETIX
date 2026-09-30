@@ -16,18 +16,9 @@ import { useFarm } from '../../lib/context/FarmContext';
 export const FarmManagement: React.FC = () => {
   const { activeFarm, toggleFieldValve } = useFarm();
 
-  const [activities, setActivities] = useState([
-    { id: 'act-1', text: 'Top-dress Calcium Nitrate in Field A (Tomato)', date: 'Today, 07:00 AM', done: true, priority: 'High' },
-    { id: 'act-2', text: 'Field B furrow weed clearing before rain', date: 'Today, 03:00 PM', done: false, priority: 'Critical' },
-    { id: 'act-3', text: 'Scout Field C Orchard for pomegranate bacterial blight', date: 'Tomorrow, 08:30 AM', done: false, priority: 'Medium' },
-    { id: 'act-4', text: 'Check Solar Drip Pump sand filter backwash', date: 'Sep 19', done: false, priority: 'Medium' },
-  ]);
+  const [activities, setActivities] = useState<{id: string; text: string; date: string; done: boolean; priority: string}[]>([]);
 
-  const [equipmentList] = useState([
-    { name: 'Mahindra 575 DI Tractor (45 HP)', status: 'Operational', lastService: '2026-08-12', hoursRun: '640 hrs', fuel: '82%' },
-    { name: 'Solar Submersible 5HP Drip Pump', status: 'Running (Solar Mode)', lastService: '2026-07-28', hoursRun: '1,280 hrs', fuel: 'Solar (4.2 kW)' },
-    { name: 'AgriDrone 16L Hexacopter Sprayer', status: 'Standby / Ready', lastService: '2026-09-02', hoursRun: '48 hrs', fuel: '95% Batt' },
-  ]);
+  const [equipmentList] = useState<{name: string; status: string; lastService: string; hoursRun: string; fuel: string}[]>([]);
 
   const [newActivityText, setNewActivityText] = useState('');
 
@@ -63,9 +54,6 @@ export const FarmManagement: React.FC = () => {
             <h1 className="text-2xl font-extrabold text-white font-display">
               Farm & Field Operations Hub
             </h1>
-            <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
-              Agronomy ERP
-            </span>
           </div>
           <p className="text-xs text-slate-300">
             Hierarchical farm layout, individual field plots, task execution checklists, and agricultural machinery logs.
@@ -73,12 +61,31 @@ export const FarmManagement: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="p-2.5 rounded-xl bg-[#0d2e20] border border-emerald-500/30 text-xs">
-            <span className="text-slate-400 block text-[10px]">Active Estate</span>
-            <span className="font-bold text-white">{activeFarm.name} ({activeFarm.totalAcres} Ac)</span>
-          </div>
+          {activeFarm.name ? (
+            <div className="p-2.5 rounded-xl bg-[#0d2e20] border border-emerald-500/30 text-xs">
+              <span className="text-slate-400 block text-[10px]">Active Estate</span>
+              <span className="font-bold text-white">
+                {activeFarm.name}{activeFarm.totalAcres > 0 ? ` (${activeFarm.totalAcres} Ac)` : ''}
+              </span>
+            </div>
+          ) : (
+            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs">
+              <span className="text-amber-300 font-semibold">No farm set up yet</span>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Show empty state if no farm exists */}
+      {!activeFarm.name && (
+        <div className="p-10 rounded-2xl bg-[#0a2318] border border-emerald-500/20 text-center space-y-3">
+          <div className="text-4xl">🌱</div>
+          <h3 className="font-extrabold text-lg text-white">No Farm Added Yet</h3>
+          <p className="text-xs text-slate-400 max-w-sm mx-auto">
+            Go to <strong className="text-emerald-400">Farmer Profile → Farm Location</strong> to set up your farm's location, then add field plots here.
+          </p>
+        </div>
+      )}
 
       {/* Field Plots Hierarchy Cards */}
       <div className="space-y-3">
@@ -87,7 +94,9 @@ export const FarmManagement: React.FC = () => {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {activeFarm.fields.map((field) => (
+          {activeFarm.fields &&
+            activeFarm.fields.length > 0 &&
+            activeFarm.fields.map((field) => (
             <div
               key={field.id}
               className="p-5 rounded-2xl bg-[#0a2318] border border-emerald-500/20 shadow-xl space-y-3 flex flex-col justify-between"

@@ -187,11 +187,12 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [farms, setFarms] = useState<Farm[]>(() => {
     const saved = localStorage.getItem('khetix_farms');
-    return saved ? JSON.parse(saved) : INITIAL_FARMS;
+    // Never seed fake/demo farms — start empty for real users
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [activeFarmId, setActiveFarmIdState] = useState<string>(() => {
-    return localStorage.getItem('khetix_active_farm_id') || (INITIAL_FARMS[0]?.id || '');
+    return localStorage.getItem('khetix_active_farm_id') || '';
   });
 
   const [activeModule, setActiveModuleState] = useState<NavigationModule>(() => {
@@ -207,7 +208,8 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [notifications, setNotifications] = useState<AlertNotification[]>(() => {
     const saved = localStorage.getItem('khetix_notifications');
-    return saved ? JSON.parse(saved) : INITIAL_NOTIFICATIONS;
+    // Start with empty notifications — never pre-populate with demo data
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -226,42 +228,42 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [todayPlan, setTodayPlan] = useState<TodayFarmPlanItem[]>(() => {
     const saved = localStorage.getItem('khetix_today_plan');
-    return saved ? JSON.parse(saved) : INITIAL_TODAY_PLAN;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [todayTasks, setTodayTasks] = useState<TodayTaskItem[]>(() => {
     const saved = localStorage.getItem('khetix_today_tasks');
-    return saved ? JSON.parse(saved) : INITIAL_TODAY_TASKS;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [calendarEvents, setCalendarEvents] = useState<FarmCalendarEvent[]>(() => {
     const saved = localStorage.getItem('khetix_calendar_events');
-    return saved ? JSON.parse(saved) : INITIAL_CALENDAR_EVENTS;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [inventory, setInventory] = useState<InventoryItem[]>(() => {
     const saved = localStorage.getItem('khetix_inventory');
-    return saved ? JSON.parse(saved) : INITIAL_INVENTORY;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [expenses, setExpenses] = useState<ExpenseRecord[]>(() => {
     const saved = localStorage.getItem('khetix_expenses');
-    return saved ? JSON.parse(saved) : INITIAL_EXPENSES;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [labour, setLabour] = useState<LabourWorker[]>(() => {
     const saved = localStorage.getItem('khetix_labour');
-    return saved ? JSON.parse(saved) : INITIAL_LABOUR;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [journal, setJournal] = useState<FarmJournalEntry[]>(() => {
     const saved = localStorage.getItem('khetix_journal');
-    return saved ? JSON.parse(saved) : INITIAL_JOURNAL;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [documents, setDocuments] = useState<FarmDocument[]>(() => {
     const saved = localStorage.getItem('khetix_documents');
-    return saved ? JSON.parse(saved) : INITIAL_DOCUMENTS;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [quickActionTrigger, setQuickActionTrigger] = useState<string | null>(null);
@@ -409,37 +411,20 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('khetix_orders', JSON.stringify(orders));
   }, [orders]);
 
+  // Empty placeholder — never show fake location/crop data
   const defaultFarm: Farm = {
     id: 'farm-default',
-    name: 'My New Farm',
-    farmerName: currentUser?.name || 'Farmer',
-    location: 'Nashik, Maharashtra',
-    state: 'Maharashtra',
-    district: 'Nashik',
-    totalAcres: 5,
-    primaryCrop: 'Wheat',
-    soilType: 'Loamy Soil',
-    soilMoisture: 55,
-    rainProbability: 15,
-    fields: [
-      {
-        id: 'field-1',
-        name: 'Plot 1 - Main Field',
-        crop: 'Wheat',
-        variety: 'Sharbati HD-2967',
-        acres: 5,
-        sowingDate: '2025-11-10',
-        stage: 'Vegetative',
-        soilMoisture: 55,
-        valvesOpen: false,
-        nitrogenLevel: 'Adequate',
-        phosphorusLevel: 'Optimal',
-        potassiumLevel: 'High',
-        ph: 6.8,
-        organicCarbon: '0.62%',
-        healthIndex: 88,
-      },
-    ],
+    name: '',
+    farmerName: currentUser?.name || '',
+    location: '',
+    state: '',
+    district: '',
+    totalAcres: 0,
+    primaryCrop: '',
+    soilType: '',
+    soilMoisture: 0,
+    rainProbability: 0,
+    fields: [],
   };
 
   const hasFarms = farms.length > 0;
@@ -557,8 +542,8 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
       input = {
         name: inputOrName,
         emailOrPhone: emailOrPhoneParam || '',
-        state: stateParam || 'Maharashtra',
-        district: districtParam || 'Nashik',
+        state: stateParam || '',
+        district: districtParam || '',
         kisanId: kisanIdParam,
       };
     } else {
@@ -579,13 +564,14 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
           phone: phone || resolvedContact,
           email,
           password: input.password,
-          farmName: input.farmName || `${resolvedName}'s Farm`,
-          state: input.state || 'Maharashtra',
-          district: input.district || 'Nashik',
-          taluk: input.taluk || 'Dindori',
-          village: input.village || 'Pimpalgaon Baswant',
-          totalAcres: input.totalAcres || 10,
-          primaryCrop: input.primaryCrop || 'Tomato',
+          // No fake defaults — farm setup done post-login in Farm Management
+          farmName: input.farmName || undefined,
+          state: input.state || undefined,
+          district: input.district || undefined,
+          taluk: input.taluk || undefined,
+          village: input.village || undefined,
+          totalAcres: input.totalAcres || undefined,
+          primaryCrop: input.primaryCrop || undefined,
           language,
         }),
       });
@@ -601,44 +587,7 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (data.user) {
         setCurrentUser(data.user);
         localStorage.setItem('khetix_user', JSON.stringify(data.user));
-
-        // Create initial live farm in state
-        const farmId = `farm-${Date.now()}`;
-        const newFarm: Farm = {
-          id: farmId,
-          name: input.farmName || `${resolvedName}'s Farm`,
-          farmerName: resolvedName,
-          location: [input.village, input.taluk, input.district, input.state].filter(Boolean).join(', '),
-          state: input.state || 'Maharashtra',
-          district: input.district || 'Nashik',
-          totalAcres: input.totalAcres || 10,
-          primaryCrop: input.primaryCrop || 'Tomato',
-          soilType: 'Clay Loam (Black Soil)',
-          soilMoisture: 62,
-          rainProbability: 25,
-          fields: [
-            {
-              id: `field-${Date.now()}-1`,
-              name: `Plot 1 - Main ${input.primaryCrop || 'Tomato'} Field`,
-              crop: input.primaryCrop || 'Tomato',
-              variety: 'High-Yield Certified F1',
-              acres: input.totalAcres || 10,
-              sowingDate: new Date().toISOString().slice(0, 10),
-              stage: 'Vegetative',
-              soilMoisture: 62,
-              valvesOpen: false,
-              nitrogenLevel: 'Adequate',
-              phosphorusLevel: 'Optimal',
-              potassiumLevel: 'Optimal',
-              ph: 6.8,
-              organicCarbon: '0.68%',
-              healthIndex: 94,
-            },
-          ],
-        };
-
-        setFarms((prev) => [newFarm, ...prev]);
-        setActiveFarmIdState(farmId);
+        // Farms start empty — user creates their real farm via Farm Management post-login
       }
 
       setActiveModuleState('dashboard');
