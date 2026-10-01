@@ -13,7 +13,7 @@ import {
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const SatelliteNDVI: React.FC = () => {
-  const { activeFarm } = useFarm();
+  const { activeFarm, t } = useFarm();
 
   const [activeLayer, setActiveLayer] = useState<'NDVI' | 'NDRE' | 'NDWI' | 'Thermal'>('NDVI');
   const [selectedZone, setSelectedZone] = useState<string | null>('B-3');
@@ -63,14 +63,14 @@ export const SatelliteNDVI: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Satellite className="w-6 h-6 text-cyan-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Satellite NDVI & Drone Imagery Telemetry
+              {t('satellite_title', 'Satellite NDVI & Canopy Monitoring')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[10px] font-bold">
               Sentinel-2 L2A (10m)
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Multispectral surface reflectance imagery for crop canopy vigor, chlorophyll absorption, and thermal water stress.
+            {t('satellite_subtitle', 'Multi-spectral Sentinel-2 vegetation index, chlorophyll density, stress zoning, and canopy vigor maps.')}
           </p>
         </div>
 

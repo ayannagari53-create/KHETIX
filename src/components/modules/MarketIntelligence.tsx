@@ -24,7 +24,7 @@ import { MandiCommodity } from '../../types';
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const MarketIntelligence: React.FC = () => {
-  const { setActiveModule } = useFarm();
+  const { setActiveModule, t } = useFarm();
   const [selectedCommodity, setSelectedCommodity] = useState<MandiCommodity>(MANDI_COMMODITIES[0]);
 
   return (
@@ -35,24 +35,24 @@ export const MarketIntelligence: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <TrendingUp className="w-6 h-6 text-amber-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Mandi Price Intelligence & Arbitrage
+              {t('market_title', 'Mandi Price Intelligence & Arbitrage')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
               Live APMC Feeds
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Real-time terminal mandi price benchmarks, freight-adjusted net realization, and predictive arrival volume forecasting.
+            {t('market_subtitle', 'Real-time terminal mandi price benchmarks, freight-adjusted net realization, and predictive arrival volume forecasting.')}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveModule('supply-chain')}
-            className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-2 transition"
+            className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-2 transition cursor-pointer"
           >
             <Truck className="w-4 h-4" />
-            <span>Book Cold-Chain Transport</span>
+            <span>{t('nav_supply_chain', 'Book Cold-Chain Transport')}</span>
           </button>
         </div>
       </div>

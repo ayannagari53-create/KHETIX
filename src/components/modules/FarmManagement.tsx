@@ -14,7 +14,7 @@ import {
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const FarmManagement: React.FC = () => {
-  const { activeFarm, toggleFieldValve } = useFarm();
+  const { activeFarm, toggleFieldValve, t } = useFarm();
 
   const [activities, setActivities] = useState<{id: string; text: string; date: string; done: boolean; priority: string}[]>([]);
 
@@ -52,32 +52,32 @@ export const FarmManagement: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Tractor className="w-6 h-6 text-amber-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Farm & Field Operations Hub
+              {t('farm_hub_title', 'Farm & Field Operations Hub')}
             </h1>
           </div>
           <p className="text-xs text-slate-300">
-            Hierarchical farm layout, individual field plots, task execution checklists, and agricultural machinery logs.
+            {t('farm_hub_subtitle', 'Hierarchical farm layout, individual field plots, task execution checklists, and agricultural machinery logs.')}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          {activeFarm.name ? (
+          {activeFarm?.name ? (
             <div className="p-2.5 rounded-xl bg-[#0d2e20] border border-emerald-500/30 text-xs">
-              <span className="text-slate-400 block text-[10px]">Active Estate</span>
+              <span className="text-slate-400 block text-[10px]">{t('farm_total_farms', 'Active Estate')}</span>
               <span className="font-bold text-white">
-                {activeFarm.name}{activeFarm.totalAcres > 0 ? ` (${activeFarm.totalAcres} Ac)` : ''}
+                {activeFarm?.name || ''}{(activeFarm?.totalAcres || 0) > 0 ? ` (${activeFarm?.totalAcres} ${t('common_acres', 'Ac')})` : ''}
               </span>
             </div>
           ) : (
             <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs">
-              <span className="text-amber-300 font-semibold">No farm set up yet</span>
+              <span className="text-amber-300 font-semibold">{t('common_no_data', 'No farm set up yet')}</span>
             </div>
           )}
         </div>
       </div>
 
       {/* Show empty state if no farm exists */}
-      {!activeFarm.name && (
+      {!activeFarm?.name && (
         <div className="p-10 rounded-2xl bg-[#0a2318] border border-emerald-500/20 text-center space-y-3">
           <div className="text-4xl">🌱</div>
           <h3 className="font-extrabold text-lg text-white">No Farm Added Yet</h3>
@@ -94,7 +94,7 @@ export const FarmManagement: React.FC = () => {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {activeFarm.fields &&
+          {activeFarm?.fields &&
             activeFarm.fields.length > 0 &&
             activeFarm.fields.map((field) => (
             <div

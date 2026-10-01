@@ -24,12 +24,14 @@ import { evaluateIrrigationDecision } from '../../lib/rules/irrigationEngine';
 export const ExecutiveDashboard: React.FC = () => {
   const {
     activeFarm,
+    hasFarms,
     soilMoistureOverride,
     setSoilMoistureOverride,
     rainProbabilityOverride,
     setRainProbabilityOverride,
     setActiveModule,
     toggleFieldValve,
+    t,
   } = useFarm();
 
   const [activeTab, setActiveTab] = useState<'3d' | 'fields'>('3d');
@@ -110,6 +112,30 @@ export const ExecutiveDashboard: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Empty State Banner if no farm registered yet */}
+      {(!hasFarms || !activeFarm?.name) && (
+        <div className="p-5 rounded-2xl bg-[#0a2318] border border-amber-500/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in">
+          <div className="flex items-center gap-3.5">
+            <span className="text-3xl">🌱</span>
+            <div>
+              <h3 className="font-extrabold text-sm sm:text-base text-white">
+                {t('dash_no_farm_notice', 'No farm registered yet.')}
+              </h3>
+              <p className="text-xs text-slate-300">
+                {t('dash_no_farm_desc', 'Set up your farm location, acreage, and crops to enable real-time telemetry and advisory.')}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setActiveModule('farmer-profile')}
+            className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs flex items-center gap-1.5 transition shadow-md hover:scale-[1.02] shrink-0 cursor-pointer"
+          >
+            <span>{t('dash_add_farm_btn', 'Add Farm')}</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* 4 Live KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -272,8 +298,15 @@ export const ExecutiveDashboard: React.FC = () => {
                   </div>
                 ))
                 ) : (
-                  <div className="col-span-3 text-center py-6 text-slate-400 text-xs">
-                    {t('dash_no_fields', 'No field plots configured yet. Open Farm Management to register plots.')}
+                  <div className="col-span-3 text-center py-8 text-slate-400 text-xs bg-[#071f15] rounded-xl border border-emerald-500/20 space-y-2">
+                    <p className="font-semibold text-slate-300">{t('dash_no_fields_title', 'No field added yet.')}</p>
+                    <p className="text-[11px] text-slate-400">{t('dash_no_fields', 'Open Farm Management to register your field plots and telemetry.')}</p>
+                    <button
+                      onClick={() => setActiveModule('farms')}
+                      className="px-3.5 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-xs font-bold transition cursor-pointer"
+                    >
+                      + {t('dash_add_field_plot', 'Add Field Plot')}
+                    </button>
                   </div>
                 )}
               </div>
@@ -331,11 +364,11 @@ export const ExecutiveDashboard: React.FC = () => {
             </div>
 
             <h3 className="text-base font-extrabold text-white leading-snug">
-              {irrigationDecision.title}
+              {irrigationDecision?.title || 'Irrigation Optimization Active'}
             </h3>
 
             <ul className="space-y-2 text-xs text-slate-300">
-              {irrigationDecision.reasoning.map((r, idx) => (
+              {(irrigationDecision?.reasoning || []).map((r, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                   <span>{r}</span>
@@ -345,7 +378,7 @@ export const ExecutiveDashboard: React.FC = () => {
 
             <div className="pt-2 flex items-center justify-between border-t border-emerald-500/20 text-xs">
               <span className="text-slate-400">{t('dash_water_saved', 'Est. Water Saved')}</span>
-              <strong className="text-sky-400">{irrigationDecision.waterSavingsLiters.toLocaleString()} Liters</strong>
+              <strong className="text-sky-400">{(irrigationDecision?.waterSavingsLiters || 0).toLocaleString()} Liters</strong>
             </div>
 
             <button

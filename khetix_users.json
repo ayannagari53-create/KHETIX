@@ -5,10 +5,10 @@
       "name": "Ramesh Patil",
       "emailOrPhone": "ramesh.kisan@gmail.com",
       "email": "ramesh.kisan@gmail.com",
-      "googleId": "google-user-203259",
+      "googleId": "google-user-770159",
       "avatar": "https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&auto=format&fit=crop&q=80",
       "authProvider": "google",
-      "preferredLanguage": "kn",
+      "preferredLanguage": "en",
       "state": "Karnataka",
       "district": "Bengaluru Rural",
       "taluk": "Devanahalli",
@@ -18,7 +18,27 @@
       "primaryCrop": "Tomato",
       "farmName": "Ramesh Patil's Precision Farm",
       "createdAt": "2026-09-28T12:11:46.454Z",
-      "updatedAt": "2026-09-30T13:50:10.882Z"
+      "updatedAt": "2026-10-01T09:05:00.846Z"
+    },
+    {
+      "id": "usr-loc-1790845945330",
+      "name": "Suresh Gowda",
+      "emailOrPhone": "+919876543210",
+      "phone": "+919876543210",
+      "passwordHash": "e0478bd7ab031ebea16cead2b8677b65d0287f0d63ccbcf4df32ee2f327d496710a87d9afd7da4bb0caf64f6c297292340779f593500b0abab86a3bf25d1cda4",
+      "passwordSalt": "c3b12a52039288f1888f063586160d5b",
+      "authProvider": "local",
+      "preferredLanguage": "kn",
+      "state": "Maharashtra",
+      "district": "Nashik",
+      "taluk": "Dindori",
+      "village": "Pimpalgaon Baswant",
+      "kisanId": "KISAN-IN-899973",
+      "totalAcres": 10,
+      "primaryCrop": "Tomato",
+      "farmName": "Suresh Gowda's Farm",
+      "createdAt": "2026-10-01T09:12:25.330Z",
+      "updatedAt": "2026-10-01T09:12:25.330Z"
     }
   ]
 }

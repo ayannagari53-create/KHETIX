@@ -16,12 +16,13 @@ import { MarketplaceProduct } from '../../types';
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const MarketplaceStore: React.FC = () => {
-  const { cart, addToCart, removeFromCart, clearCart } = useFarm();
+  const { cart, addToCart, removeFromCart, clearCart, activeFarm, t } = useFarm();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [checkoutModalOpen, setCheckoutModalOpen] = useState<boolean>(false);
   const [orderConfirmed, setOrderConfirmed] = useState<boolean>(false);
+  const [orderSuccessMsg, setOrderSuccessMsg] = useState<string | null>(null);
 
   const categories = ['All', 'Bio-Fertilizer', 'Fungicide / Biocontrol', 'Drip & Irrigation', 'Seeds', 'Livestock Feed'];
 
@@ -43,26 +44,37 @@ export const MarketplaceStore: React.FC = () => {
       clearCart();
       setCheckoutModalOpen(false);
       setOrderConfirmed(false);
-      alert('Order placed successfully! Delivery scheduled to Green Acres Farm via Kisan Agro Logistics.');
-    }, 1800);
+      setOrderSuccessMsg(`Order placed successfully! Delivery scheduled to ${activeFarm?.name || 'your farm'} via Kisan Agro Logistics.`);
+      setTimeout(() => setOrderSuccessMsg(null), 5000);
+    }, 1200);
   };
 
   return (
     <div className="space-y-6 pb-12">
+      {orderSuccessMsg && (
+        <div className="p-4 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center justify-between animate-in fade-in">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <span>{orderSuccessMsg}</span>
+          </div>
+          <button onClick={() => setOrderSuccessMsg(null)} className="text-emerald-400 hover:text-white">✕</button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="p-6 rounded-2xl bg-[#0a2318]/90 backdrop-blur-md border border-emerald-500/20 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <ShoppingBag className="w-6 h-6 text-emerald-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Verified Agri-Marketplace & Direct Inputs
+              {t('store_title', 'Agri Input & Direct Produce Store')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
               Kisan Direct
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Certified authentic biological inputs, hybrid seeds, and precision drip hardware with Kisan subsidy benefits and direct farm delivery.
+            {t('store_subtitle', 'Certified seeds, organic fertilizers, precision drip hardware, and farmer direct-to-consumer store.')}
           </p>
         </div>
 
@@ -70,7 +82,7 @@ export const MarketplaceStore: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setCheckoutModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs flex items-center gap-2 shadow-lg transition"
+            className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs flex items-center gap-2 shadow-lg transition cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4" />
             <span>Farm Cart ({totalItemsCount}) — ₹{cartTotal.toLocaleString()}</span>

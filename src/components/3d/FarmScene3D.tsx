@@ -32,6 +32,7 @@ export const FarmScene3D: React.FC<FarmScene3DProps> = ({
   const [isRaining, setIsRaining] = useState<boolean>(rainProbabilityOverride > 60);
   const [cameraView, setCameraView] = useState<'overview' | 'fieldA' | 'fieldB' | 'drone'>('overview');
   const [isRotating, setIsRotating] = useState<boolean>(true);
+  const [hasWebGlError, setHasWebGlError] = useState<boolean>(false);
 
   // Sync rain state with context
   useEffect(() => {
@@ -55,16 +56,23 @@ export const FarmScene3D: React.FC<FarmScene3DProps> = ({
     camera.position.set(28, 22, 28);
     camera.lookAt(0, 2, 0);
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance',
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance',
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    } catch (err) {
+      console.warn('WebGL is not supported or failed in this environment, using telemetry map view:', err);
+      setHasWebGlError(true);
+      return;
+    }
 
     // LIGHTING
     const ambientLight = new THREE.AmbientLight(0xdcfce7, 0.65);
@@ -578,6 +586,63 @@ export const FarmScene3D: React.FC<FarmScene3DProps> = ({
       renderer.dispose();
     };
   }, [soilMoistureOverride, isRaining, isRotating, interactive, onSelectField]);
+
+  if (hasWebGlError) {
+    return (
+      <div ref={containerRef} className={`relative rounded-2xl overflow-hidden border border-emerald-500/20 bg-[#0a2318] p-6 shadow-2xl flex flex-col justify-between ${className}`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+            <span className="font-extrabold text-sm text-white">Live Farm Telemetry Map</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">2D Sensor Radar</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-sky-300 bg-sky-500/10 border border-sky-500/20 px-2.5 py-1 rounded-lg">
+              Rain: {rainProbabilityOverride}%
+            </span>
+            <span className="text-xs text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-lg">
+              Moisture: {soilMoistureOverride}%
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
+          <div className="p-4 rounded-xl bg-black/40 border border-emerald-500/20 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-white">Plot Alpha — High Yield Block</span>
+              <span className="text-emerald-400 font-semibold">NDVI 0.84</span>
+            </div>
+            <div className="flex items-center justify-between text-xs text-slate-300">
+              <span>Volumetric Moisture</span>
+              <strong className="text-white">{soilMoistureOverride}%</strong>
+            </div>
+            <div className="w-full bg-black/60 h-2 rounded-full overflow-hidden">
+              <div className="bg-emerald-400 h-full rounded-full transition-all" style={{ width: `${soilMoistureOverride}%` }} />
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-black/40 border border-emerald-500/20 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-white">Plot Beta — Perimeter Furrow</span>
+              <span className="text-sky-400 font-semibold">NDVI 0.79</span>
+            </div>
+            <div className="flex items-center justify-between text-xs text-slate-300">
+              <span>Volumetric Moisture</span>
+              <strong className="text-white">{Math.max(20, soilMoistureOverride - 12)}%</strong>
+            </div>
+            <div className="w-full bg-black/60 h-2 rounded-full overflow-hidden">
+              <div className="bg-sky-400 h-full rounded-full transition-all" style={{ width: `${Math.max(20, soilMoistureOverride - 12)}%` }} />
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center text-[11px] text-slate-400 border-t border-emerald-500/10 pt-3 flex items-center justify-between">
+          <span>📡 Telemetry active • IoT solenoid valves synced with agronomic rule engine</span>
+          <span className="text-emerald-400 font-medium">Auto-Irrigation Ready</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className={`relative rounded-2xl overflow-hidden border border-emerald-500/20 bg-[#06150f] shadow-2xl ${className}`}>

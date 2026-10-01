@@ -18,6 +18,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts';
+import { useFarm } from '../../lib/context/FarmContext';
 
 interface Animal {
   id: string;
@@ -32,6 +33,7 @@ interface Animal {
 }
 
 export const LivestockManagement: React.FC = () => {
+  const { t } = useFarm();
   const [animals, setAnimals] = useState<Animal[]>([
     {
       id: 'ls-1',
@@ -97,20 +99,20 @@ export const LivestockManagement: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Milk className="w-6 h-6 text-sky-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Livestock & Dairy Management
+              {t('livestock_title', 'Livestock & Dairy Management')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[10px] font-bold">
-              Animal Husbandry
+              {t('livestock_badge', 'Animal Husbandry')}
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Digital Tag ID livestock records, daily milk yield analytics, lactation stages, and veterinary vaccination reminders.
+            {t('livestock_subtitle', 'Digital Tag ID livestock records, daily milk yield analytics, lactation stages, and veterinary vaccination reminders.')}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-[#0d2e20] border border-emerald-500/30 text-xs text-right">
-            <span className="text-slate-400 block text-[10px]">Today's Herd Total</span>
+            <span className="text-slate-400 block text-[10px]">{t('livestock_today_herd_total', "Today's Herd Total")}</span>
             <span className="text-sky-300 font-extrabold text-sm">45.8 Liters</span>
           </div>
         </div>
@@ -119,25 +121,25 @@ export const LivestockManagement: React.FC = () => {
       {/* 4 Quick Stat Metric Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-4 rounded-xl bg-[#0a2318] border border-emerald-500/20">
-          <span className="text-[11px] text-slate-400 uppercase font-bold">Total Herd Size</span>
+          <span className="text-[11px] text-slate-400 uppercase font-bold">{t('livestock_total_herd_size', 'Total Herd Size')}</span>
           <div className="text-2xl font-extrabold text-white font-display mt-1">12 Cattle</div>
           <span className="text-[10px] text-emerald-400">8 Lactating • 2 Dry • 2 Calves</span>
         </div>
 
         <div className="p-4 rounded-xl bg-[#0a2318] border border-emerald-500/20">
-          <span className="text-[11px] text-slate-400 uppercase font-bold">Avg Yield / Animal</span>
+          <span className="text-[11px] text-slate-400 uppercase font-bold">{t('livestock_avg_yield', 'Avg Yield / Animal')}</span>
           <div className="text-2xl font-extrabold text-sky-400 font-display mt-1">14.8 L/day</div>
           <span className="text-[10px] text-sky-300">+1.2 L vs Regional Avg</span>
         </div>
 
         <div className="p-4 rounded-xl bg-[#0a2318] border border-emerald-500/20">
-          <span className="text-[11px] text-slate-400 uppercase font-bold">Daily Milk Revenue</span>
+          <span className="text-[11px] text-slate-400 uppercase font-bold">{t('livestock_daily_revenue', 'Daily Milk Revenue')}</span>
           <div className="text-2xl font-extrabold text-amber-400 font-display mt-1">₹2,840</div>
           <span className="text-[10px] text-amber-300">₹62/L Pure A2 Cow Milk</span>
         </div>
 
         <div className="p-4 rounded-xl bg-[#0a2318] border border-emerald-500/20">
-          <span className="text-[11px] text-slate-400 uppercase font-bold">Feed Efficiency</span>
+          <span className="text-[11px] text-slate-400 uppercase font-bold">{t('livestock_feed_efficiency', 'Feed Efficiency')}</span>
           <div className="text-2xl font-extrabold text-emerald-400 font-display mt-1">1.34 FCR</div>
           <span className="text-[10px] text-emerald-400">Optimum Nutrition Ratio</span>
         </div>
@@ -149,8 +151,8 @@ export const LivestockManagement: React.FC = () => {
         <div className="lg:col-span-5 p-6 rounded-2xl bg-[#0a2318] border border-emerald-500/20 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-extrabold text-base text-white">7-Day Herd Milk Yield</h3>
-              <p className="text-xs text-slate-400">Daily morning + evening collection</p>
+              <h3 className="font-extrabold text-base text-white">{t('livestock_milk_trend', '7-Day Herd Milk Yield')}</h3>
+              <p className="text-xs text-slate-400">{t('livestock_milk_trend_sub', 'Daily morning + evening collection')}</p>
             </div>
             <TrendingUp className="w-4 h-4 text-emerald-400" />
           </div>
@@ -185,7 +187,7 @@ export const LivestockManagement: React.FC = () => {
           <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1 text-xs">
             <div className="font-bold text-sky-400 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Nutrition Ration Recommendation</span>
+              <span>{t('livestock_nutrition_recom', 'Nutrition Ration Recommendation')}</span>
             </div>
             <p className="text-slate-300 leading-relaxed text-[11px]">
               Maintain 22 kg green Napier grass + 6 kg dry jowar straw + 3.5 kg balanced cattle feed concentrate with 50g mineral mixture per cow to support current lactation peak.
@@ -197,8 +199,8 @@ export const LivestockManagement: React.FC = () => {
         <div className="lg:col-span-7 p-6 rounded-2xl bg-[#0a2318] border border-emerald-500/20 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-extrabold text-base text-white">Animal Digital Tag Registry</h3>
-              <p className="text-xs text-slate-400">Vaccinations & individual performance</p>
+              <h3 className="font-extrabold text-base text-white">{t('livestock_tag_registry', 'Animal Digital Tag Registry')}</h3>
+              <p className="text-xs text-slate-400">{t('livestock_tag_sub', 'Vaccinations & individual performance')}</p>
             </div>
           </div>
 
@@ -223,21 +225,21 @@ export const LivestockManagement: React.FC = () => {
                         : 'bg-amber-500/20 text-amber-300'
                     }`}
                   >
-                    {an.healthStatus}
+                    {an.healthStatus === 'Healthy' ? t('common_healthy', 'Healthy') : t('common_warning', an.healthStatus)}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] text-slate-300 pt-1">
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Breed</span>
+                    <span className="text-slate-400 block text-[10px]">{t('livestock_breed', 'Breed')}</span>
                     <strong className="text-white">{an.breed}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Lactation Phase</span>
+                    <span className="text-slate-400 block text-[10px]">{t('livestock_lactation', 'Lactation Phase')}</span>
                     <span className="text-emerald-300">{an.lactationStage}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Daily Yield</span>
+                    <span className="text-slate-400 block text-[10px]">{t('livestock_daily_yield', 'Daily Yield')}</span>
                     <strong className="text-sky-300 font-extrabold">{an.dailyYieldLiters} L/day</strong>
                   </div>
                 </div>
@@ -248,7 +250,7 @@ export const LivestockManagement: React.FC = () => {
                     <span>{an.lastVaccination}</span>
                   </span>
                   <span className="text-emerald-400 font-semibold cursor-pointer hover:underline">
-                    View Health Card
+                    {t('livestock_view_health', 'View Health Card')}
                   </span>
                 </div>
               </div>

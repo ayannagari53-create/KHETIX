@@ -177,7 +177,7 @@ export const SupplyChainTracker: React.FC = () => {
             <div className="space-y-1 text-xs">
               <div className="font-black text-sm tracking-wide text-slate-950">KHETIX VERIFIED</div>
               <p className="text-[11px] font-mono text-slate-700 font-bold">{activeBatch.batchId}</p>
-              <p className="text-[11px] text-emerald-800 font-semibold">Farmer: {activeFarm.farmerName}</p>
+              <p className="text-[11px] text-emerald-800 font-semibold">Farmer: {activeFarm?.farmerName || 'Registered Farmer'}</p>
               <p className="text-[10px] text-slate-600">Geo: 20.0059° N, 73.7898° E</p>
             </div>
 

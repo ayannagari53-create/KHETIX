@@ -24,7 +24,7 @@ import {
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const FarmAnalytics: React.FC = () => {
-  const { activeFarm } = useFarm();
+  const { activeFarm, t } = useFarm();
 
   const costBreakdownData = [
     { name: 'Labor & Weeding', value: 55000, color: '#10b981' },
@@ -54,14 +54,14 @@ export const FarmAnalytics: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <LineChart className="w-6 h-6 text-emerald-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Farm Profit & Loss Analytics
+              {t('analytics_title', 'Farm Profit & Loss Analytics')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
               Acre Net Margin
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Cost of cultivation audits, seasonal yield trends, input efficiency indices, and net harvest margins.
+            {t('analytics_subtitle', 'Cost of cultivation audits, seasonal yield trends, input efficiency indices, and net harvest margins.')}
           </p>
         </div>
 

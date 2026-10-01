@@ -13,7 +13,7 @@ import {
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const SustainabilityESG: React.FC = () => {
-  const { activeFarm } = useFarm();
+  const { activeFarm, t } = useFarm();
 
   const esgPillars = [
     {
@@ -54,14 +54,14 @@ export const SustainabilityESG: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <Leaf className="w-6 h-6 text-emerald-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Sustainability & Farm ESG Carbon Score
+              {t('sustain_title', 'Sustainability & Carbon Credits (ESG)')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
               Carbon Verified
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Measurement of regenerative agriculture practices, carbon sequestration tonnage, and global voluntary carbon credit eligibility.
+            {t('sustain_subtitle', 'Regenerative farming metrics, verified carbon sequestration credits, methane reduction, and solar irrigation offset.')}
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export const SustainabilityESG: React.FC = () => {
             Estimated Carbon Credits: 28.5 MT CO₂e / Year
           </h2>
           <p className="text-xs text-slate-300 leading-relaxed">
-            By avoiding flood irrigation, adopting solar water pumping, and utilizing zero-tillage residue retention, {activeFarm.name} sequesters verified soil organic carbon eligible for direct monetization.
+            By avoiding flood irrigation, adopting solar water pumping, and utilizing zero-tillage residue retention, {activeFarm?.name || 'your farm'} sequesters verified soil organic carbon eligible for direct monetization.
           </p>
           <div className="flex items-center gap-4 pt-1 text-xs">
             <div className="p-2 rounded-lg bg-black/40 border border-white/5">

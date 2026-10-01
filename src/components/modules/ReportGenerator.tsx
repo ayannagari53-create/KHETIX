@@ -72,15 +72,15 @@ export const ReportGenerator: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-emerald-50 border border-emerald-100 text-xs">
           <div>
             <span className="text-slate-500 block text-[10px] uppercase font-bold">Estate Name</span>
-            <strong className="text-slate-900 text-sm">{activeFarm.name}</strong>
+            <strong className="text-slate-900 text-sm">{activeFarm?.name || 'Estate Plot'}</strong>
           </div>
           <div>
             <span className="text-slate-500 block text-[10px] uppercase font-bold">Registered Farmer</span>
-            <strong className="text-slate-900 text-sm">{activeFarm.farmerName}</strong>
+            <strong className="text-slate-900 text-sm">{activeFarm?.farmerName || 'Registered Farmer'}</strong>
           </div>
           <div>
             <span className="text-slate-500 block text-[10px] uppercase font-bold">Land Extent & Location</span>
-            <strong className="text-slate-900 text-sm">{activeFarm.totalAcres} Ac • {activeFarm.location}</strong>
+            <strong className="text-slate-900 text-sm">{activeFarm?.totalAcres || 0} Ac • {activeFarm?.location || 'Location Not Configured'}</strong>
           </div>
           <div>
             <span className="text-slate-500 block text-[10px] uppercase font-bold">Primary Monitored Crop</span>

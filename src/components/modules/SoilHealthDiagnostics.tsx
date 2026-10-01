@@ -13,15 +13,15 @@ import {
 import { useFarm } from '../../lib/context/FarmContext';
 
 export const SoilHealthDiagnostics: React.FC = () => {
-  const { activeFarm, setActiveModule } = useFarm();
+  const { activeFarm, setActiveModule, t } = useFarm();
 
   const [selectedField, setSelectedField] = useState(activeFarm?.fields?.[0]?.id || 'field-1');
 
   const soilMetrics = [
-    { label: 'Available Nitrogen (N)', value: '235 kg/ha', status: 'Medium', benchmark: '280-560 kg/ha', color: 'text-amber-400', progress: 54 },
-    { label: 'Available Phosphorus (P)', value: '44 kg/ha', status: 'Optimal', benchmark: '23-56 kg/ha', color: 'text-emerald-400', progress: 78 },
-    { label: 'Available Potassium (K)', value: '310 kg/ha', status: 'High / Optimal', benchmark: '140-280 kg/ha', color: 'text-emerald-400', progress: 88 },
-    { label: 'Soil Reaction (pH)', value: '6.8 pH', status: 'Ideal Neutral', benchmark: '6.5-7.5 pH', color: 'text-emerald-400', progress: 85 },
+    { label: t('soil_nitrogen', 'Available Nitrogen (N)'), value: '235 kg/ha', status: 'Medium', benchmark: '280-560 kg/ha', color: 'text-amber-400', progress: 54 },
+    { label: t('soil_phosphorus', 'Available Phosphorus (P)'), value: '44 kg/ha', status: 'Optimal', benchmark: '23-56 kg/ha', color: 'text-emerald-400', progress: 78 },
+    { label: t('soil_potassium', 'Available Potassium (K)'), value: '310 kg/ha', status: 'High / Optimal', benchmark: '140-280 kg/ha', color: 'text-emerald-400', progress: 88 },
+    { label: t('soil_ph', 'Soil Reaction (pH)'), value: '6.8 pH', status: 'Ideal Neutral', benchmark: '6.5-7.5 pH', color: 'text-emerald-400', progress: 85 },
     { label: 'Organic Carbon (OC)', value: '0.62%', status: 'Moderate', benchmark: '> 0.75%', color: 'text-amber-400', progress: 62 },
     { label: 'Electrical Conductivity (EC)', value: '0.42 dS/m', status: 'Normal Non-Saline', benchmark: '< 1.0 dS/m', color: 'text-emerald-400', progress: 92 },
     { label: 'Available Zinc (Zn)', value: '0.78 ppm', status: 'Deficient', benchmark: '> 1.0 ppm', color: 'text-red-400', progress: 38 },
@@ -36,29 +36,35 @@ export const SoilHealthDiagnostics: React.FC = () => {
           <div className="flex items-center gap-2 mb-1">
             <FlaskConical className="w-6 h-6 text-orange-400" />
             <h1 className="text-2xl font-extrabold text-white font-display">
-              Soil Health Diagnostics & Fertility Score
+              {t('soil_title', 'Soil Health Diagnostics & Fertility Score')}
             </h1>
             <span className="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30 text-[10px] font-bold">
               ICAR Standard
             </span>
           </div>
           <p className="text-xs text-slate-300">
-            Comprehensive macro- and micronutrient soil testing parameters, organic matter index, and tailored restorative amendments.
+            {t('soil_subtitle', 'Comprehensive macro- and micronutrient soil testing parameters, organic matter index, and tailored restorative amendments.')}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <select
-            value={selectedField}
-            onChange={(e) => setSelectedField(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-[#0d2e20] border border-emerald-500/30 text-xs font-bold text-white focus:outline-none"
-          >
-            {activeFarm.fields.map((f) => (
-              <option key={f.id} value={f.id}>
-                {f.name} ({f.crop})
-              </option>
-            ))}
-          </select>
+          {(activeFarm?.fields && activeFarm.fields.length > 0) ? (
+            <select
+              value={selectedField}
+              onChange={(e) => setSelectedField(e.target.value)}
+              className="px-3 py-2 rounded-xl bg-[#0d2e20] border border-emerald-500/30 text-xs font-bold text-white focus:outline-none"
+            >
+              {activeFarm.fields.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.name} ({f.crop})
+                </option>
+              ))}
+            </select>
+          ) : (
+            <div className="px-3 py-2 rounded-xl bg-[#0d2e20] border border-emerald-500/30 text-xs text-slate-400">
+              {t('dash_no_fields', 'Default Field Plot')}
+            </div>
+          )}
 
           <button
             onClick={() => setActiveModule('reports')}

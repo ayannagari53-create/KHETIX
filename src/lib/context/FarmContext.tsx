@@ -191,11 +191,17 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [farms, setFarms] = useState<Farm[]>(() => {
     const saved = localStorage.getItem('khetix_farms');
-    return saved && JSON.parse(saved).length > 0 ? JSON.parse(saved) : INITIAL_FARMS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {}
+    }
+    return [];
   });
 
   const [activeFarmId, setActiveFarmIdState] = useState<string>(() => {
-    return localStorage.getItem('khetix_active_farm_id') || INITIAL_FARMS[0]?.id || '';
+    return localStorage.getItem('khetix_active_farm_id') || '';
   });
 
   const [activeModule, setActiveModuleState] = useState<NavigationModule>(() => {
@@ -414,28 +420,29 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [orders]);
 
   const defaultFarm: Farm = {
-    id: 'farm-default',
-    name: currentUser?.farmName || (currentUser?.name ? `${currentUser.name}'s Farm` : 'Green Acres Farm'),
-    farmerName: currentUser?.name || 'Ramesh Kumar',
+    id: currentUser?.id ? `farm-${currentUser.id}` : 'farm-user',
+    name: currentUser?.farmName || (currentUser?.name ? `${currentUser.name}'s Farm` : ''),
+    farmerName: currentUser?.name || 'Farmer',
     location:
       [currentUser?.village, currentUser?.taluk, currentUser?.district, currentUser?.state]
         .filter(Boolean)
-        .join(', ') || 'Nashik Valley, Maharashtra',
-    state: currentUser?.state || 'Maharashtra',
-    district: currentUser?.district || 'Nashik',
-    totalAcres: currentUser?.totalAcres || 24,
-    primaryCrop: currentUser?.primaryCrop || 'Tomato (Abhinav F1)',
-    primaryCrops: currentUser?.primaryCrop
-      ? [currentUser.primaryCrop, 'Sweet Corn']
-      : ['Tomato (Abhinav F1)', 'Sweet Corn', 'Pomegranate'],
-    soilType: 'Sandy Loam (Medium Deep)',
-    soilMoisture: 64,
-    rainProbability: 25,
-    fields: INITIAL_FARMS[0]?.fields || [],
+        .join(', ') || (currentUser?.state ? `${currentUser?.district || ''}, ${currentUser?.state}` : ''),
+    state: currentUser?.state || '',
+    district: currentUser?.district || '',
+    totalAcres: currentUser?.totalAcres || 0,
+    primaryCrop: currentUser?.primaryCrop || '',
+    primaryCrops: currentUser?.primaryCrop ? [currentUser.primaryCrop] : [],
+    soilType: 'Medium Deep Black Soil',
+    soilMoisture: 60,
+    rainProbability: 20,
+    fields: [],
   };
 
-  const hasFarms = farms.length > 0;
-  const activeFarm: Farm = farms.find((f) => f.id === activeFarmId) || farms[0] || defaultFarm;
+  const hasFarms = farms.length > 0 || Boolean(currentUser?.farmName || (currentUser?.state && currentUser?.district));
+  const activeFarm: Farm =
+    farms.find((f) => f.id === activeFarmId) ||
+    farms[0] ||
+    defaultFarm;
 
   const setActiveFarmId = (id: string) => {
     setActiveFarmIdState(id);
@@ -446,6 +453,17 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateActiveFarm = (updatedProps: Partial<Farm>) => {
+    if (farms.length === 0) {
+      const newFarm: Farm = {
+        ...defaultFarm,
+        id: `farm-${Date.now()}`,
+        name: updatedProps.name || defaultFarm.name || `${currentUser?.name || 'My'}'s Farm`,
+        ...updatedProps,
+      };
+      setFarms([newFarm]);
+      setActiveFarmIdState(newFarm.id);
+      return;
+    }
     setFarms((prev) =>
       prev.map((farm) => (farm.id === activeFarm.id ? { ...farm, ...updatedProps } : farm))
     );
